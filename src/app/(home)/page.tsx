@@ -1,7 +1,18 @@
+"use client";
+import { findAllProduct } from "@/api/product.api";
 import { CardItems } from "@/components/card";
+import { ProductTypes } from "@/types";
+import { IProduct } from "@/types/product";
+import { useQuery } from "@tanstack/react-query";
 import { FaArrowRightLong } from "react-icons/fa6";
 
 const Home = () => {
+	const { isPending, error, data } = useQuery({
+		queryKey: ["product"],
+		queryFn: () => findAllProduct({}),
+	});
+	const itemsProduct: ProductTypes = data;
+	const items = itemsProduct?.data?.data;
 	return (
 		<div className='flex flex-col gap-6'>
 			<div className='flex items-center justify-between'>
@@ -14,11 +25,17 @@ const Home = () => {
 				</div>
 			</div>
 			<div className='grid grid-cols-5'>
-				{Array(10)
-					.fill(0)
-					.map((items, index) => (
-						<CardItems key={index}></CardItems>
-					))}
+				{items?.map((item: IProduct, index) => (
+					<CardItems
+						_id={item._id}
+						image={item.product_thumb}
+						price={item.product_price}
+						price_discount={item.product_price}
+						title={item.product_name}
+						rate={4.5}
+						key={item._id}
+					></CardItems>
+				))}
 			</div>
 		</div>
 	);

@@ -1,4 +1,4 @@
-import { breakpoints } from "@/constant";
+import { breakpoints } from "@/constants";
 import Image from "next/image";
 import {
 	FaApplePay,

@@ -1,4 +1,8 @@
 "use client";
+import { findAllBrand } from "@/api/brand.api";
+import { IData } from "@/types";
+import { IBrand } from "@/types/category";
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { FaFilter } from "react-icons/fa6";
 import { IoMdStar } from "react-icons/io";
@@ -7,8 +11,24 @@ import { Label } from "../ui/label";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Slider } from "../ui/slider";
 
-const FilterCategory = () => {
+const FilterCategory = ({
+	id,
+	selectedBrand,
+	setSelectedBrand,
+}: {
+	id: string;
+	selectedBrand: string;
+	setSelectedBrand: (id: string) => void;
+}) => {
 	const [range, setRange] = useState([0, 100]);
+	const { isPending, error, data } = useQuery({
+		queryKey: ["brand"],
+		queryFn: () => findAllBrand(id),
+	});
+	console.log(" data~", data);
+
+	const itemsBrand: IData<IBrand[]> = data;
+	const items = itemsBrand?.data;
 	return (
 		<div className='col-span-1 pr-5'>
 			<div className='flex flex-col gap-4'>
@@ -21,32 +41,42 @@ const FilterCategory = () => {
 						<h3 className='text-xl font-medium text-[#1a1a1a]'>
 							All Categories
 						</h3>
-						<RadioGroup defaultValue='option-one'>
+
+						<RadioGroup
+							value={selectedBrand}
+							onValueChange={setSelectedBrand}
+						>
 							<div className='flex items-center space-x-2'>
-								<RadioGroupItem
-									value='option-one'
-									id='option-one'
-								/>
-								<Label htmlFor='option-one' className='text-sm'>
-									Option One
-									<span className='text-[#808080]'>
-										(134)
-									</span>
+								<RadioGroupItem value={""} id='clear-filter' />
+								<Label
+									htmlFor='clear-filter'
+									className='text-sm'
+								>
+									All
 								</Label>
 							</div>
-							<div className='flex items-center space-x-2'>
-								<RadioGroupItem
-									value='option-two'
-									id='option-two'
-								/>
-								<Label htmlFor='option-two' className='text-sm'>
-									Option Two
-									<span className='text-[#808080]'>
-										(134)
-									</span>
-								</Label>
-							</div>
+							{items?.map((item) => (
+								<div
+									key={item._id}
+									className='flex items-center space-x-2'
+								>
+									<RadioGroupItem
+										value={item._id}
+										id={item._id}
+									/>
+									<Label
+										htmlFor={item._id}
+										className='text-sm'
+									>
+										{item.brand_name}
+										<span className='text-[#808080]'>
+											(134)
+										</span>
+									</Label>
+								</div>
+							))}
 						</RadioGroup>
+
 						<hr />
 					</div>
 					<div className='flex flex-col gap-4'>

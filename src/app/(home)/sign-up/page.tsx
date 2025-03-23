@@ -1,9 +1,5 @@
 "use client";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
+import { register } from "@/api/auth.api";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -16,18 +12,18 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { IBackend } from "@/types";
+import { IAuth } from "@/types/auth";
+import { RegisterSchema, RegisterSchemaType } from "@/validator/auth.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
-const formSchema = z.object({
-	email: z.string().email(),
-	username: z.string(),
-	password: z.string().min(8, {
-		message: "Password must be at least 2 characters.",
-	}),
-});
 const SignUp = () => {
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<RegisterSchemaType>({
+		resolver: zodResolver(RegisterSchema),
 		defaultValues: {
 			email: "",
 			username: "",
@@ -35,9 +31,22 @@ const SignUp = () => {
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values);
+	const mutation = useMutation({
+		mutationFn: (values: RegisterSchemaType) => register(values),
+		onSuccess: (data: IBackend<IAuth>) => {
+			toast.success(data.message);
+			form.reset();
+		},
+		onError: (error) => {
+			console.error("Đăng ký thất bại:", error);
+			toast.error("Register fail");
+		},
+	});
+
+	function onSubmit(values: RegisterSchemaType) {
+		mutation.mutate(values);
 	}
+
 	return (
 		<div className='flex items-center justify-center'>
 			<div className='w-[472px] p-6 rounded-lg bg-white shadow-md border border-neutral-200'>

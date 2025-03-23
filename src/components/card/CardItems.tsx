@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useState } from "react";
 import { BsBag } from "react-icons/bs";
 import { FaMinus, FaPlus } from "react-icons/fa6";
@@ -18,36 +19,55 @@ import { IoBagOutline } from "react-icons/io5";
 import { LuDot } from "react-icons/lu";
 import { MdOutlineRemoveRedEye, MdOutlineStarPurple500 } from "react-icons/md";
 
-const CardItems = () => {
+interface ICardItems {
+	_id: string;
+	path?: string;
+	image: string;
+	title?: string;
+	price?: number;
+	price_discount?: number;
+	rate?: number;
+	sale?: number;
+}
+
+const CardItems = (props: ICardItems) => {
+	const { image, path, title, price, price_discount, rate, sale, _id } =
+		props;
+	const params = useParams(); // useParams() chỉ chạy được trong Client Component
+
 	return (
-		<div className='relative group'>
+		<div className='relative group  flex flex-col h-full'>
 			<Link
-				href={"/details"}
-				className='p-[5px] border border-[#E5E5E5] flex flex-col transition delay-150 duration-300 ease-in-out hover:shadow-lg'
+				href={`/details/${_id}`}
+				className='p-[5px] border border-[#E5E5E5] flex flex-col transition delay-150 duration-300 ease-in-out hover:shadow-lg pt-4'
 			>
-				<Image
-					src={"/Image.png"}
-					alt=''
-					width={254}
-					height={230}
-					className='object-cover shrink'
-				></Image>
+				<div className='h-[254px] w-[254px]'>
+					<Image
+						src={image}
+						alt={"title as string"}
+						width={254}
+						height={230}
+						className='object-cover shrink w-full h-full'
+					></Image>
+				</div>
 				<div className='p-3 flex justify-between items-center'>
-					<div className='flex flex-col'>
-						<span className='text-[#4D4D4D] text-sm'>
-							Green Apple
+					<div className='flex flex-col gap-y-1'>
+						<span className='text-[#4D4D4D] text-base font-semibold line-clamp-1'>
+							{title}
 						</span>
-						<div className='flex items-center gap-1 text-base font-medium'>
-							<span className='text-[#1a1a1a]'>$14.99</span>
-							<span className='text-[#999] line-through'>
-								$20.99
+						<div className='flex flex-col text-base font-medium'>
+							<span className='text-red-500'>
+								{price?.toLocaleString("vi-VN")}
+							</span>
+							<span className='text-[#999] line-through text-sm'>
+								{price_discount?.toLocaleString("vi-VN")}
 							</span>
 						</div>
 						<div className='flex items-center gap-1 text-xs'>
 							<span className='text-yellow-500'>
 								<GoStarFill />
 							</span>
-							<span>4.93</span>
+							<span>{rate}</span>
 						</div>
 					</div>
 				</div>
@@ -60,20 +80,23 @@ const CardItems = () => {
 					<DialogProduct></DialogProduct>
 				</div>
 			</div>
-
 			<div className='right-0 bottom-0 p-4 absolute'>
 				<div className='flex justify-around items-center w-10 h-10 bg-[#F2F2F2] rounded-full cursor-pointer'>
 					<IoBagOutline />
 				</div>
 			</div>
-			<div
-				className='absolute left-0 top-0 p-3
+			{sale ? (
+				<div
+					className='absolute left-0 top-0 p-3
 			'
-			>
-				<div className='px-2 py-1 rounded-md bg-red-500 text-xs font-medium text-white'>
-					Sale 50%
+				>
+					<div className='px-2 py-1 rounded-md bg-red-500 text-xs font-medium text-white'>
+						Sale 50%
+					</div>
 				</div>
-			</div>
+			) : (
+				<></>
+			)}
 		</div>
 	);
 };

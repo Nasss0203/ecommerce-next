@@ -1,9 +1,5 @@
 "use client";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
+import { login } from "@/api/auth.api";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -16,25 +12,42 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { IBackend } from "@/types";
+import { IAuth } from "@/types/auth";
+import { LoginSchema, LoginSchemaType } from "@/validator/auth.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
-const formSchema = z.object({
-	email: z.string().email(),
-	password: z.string().min(8, {
-		message: "Password must be at least 2 characters.",
-	}),
-});
 const SignIn = () => {
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const router = useRouter();
+	const form = useForm<LoginSchemaType>({
+		resolver: zodResolver(LoginSchema),
 		defaultValues: {
 			email: "",
 			password: "",
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof formSchema>) {
-		console.log(values);
+	const mutation = useMutation({
+		mutationFn: (values: LoginSchemaType) => login(values),
+		onSuccess: (data: IBackend<IAuth>) => {
+			console.log(" data~", data);
+			toast.success(data.message);
+			router.push("/");
+		},
+
+		onError: (error) => {
+			console.error("Đăng nhập thất bại:", error);
+			toast.error("Login fail");
+		},
+	});
+
+	function onSubmit(values: LoginSchemaType) {
+		mutation.mutate(values);
 	}
 	return (
 		<div className='flex items-center justify-center'>

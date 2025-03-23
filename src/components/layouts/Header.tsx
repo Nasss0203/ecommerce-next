@@ -1,23 +1,13 @@
-import { breakpoints } from "@/constant";
+import { breakpoints } from "@/constants";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { BsCart } from "react-icons/bs";
 import { CiLocationOn } from "react-icons/ci";
-import { FiPhoneCall } from "react-icons/fi";
 import { IoIosArrowDown, IoMdHeartEmpty } from "react-icons/io";
 import { IoSearchOutline } from "react-icons/io5";
-const menuItems: {
-	title: string;
-	icon?: React.ReactElement;
-	href: string;
-}[] = [
-	{
-		title: "Category",
-		icon: <IoIosArrowDown />,
-		href: "/category",
-	},
-];
+import Category from "./Category";
+
 const Header = () => {
 	return (
 		<header className='flex flex-col'>
@@ -101,31 +91,7 @@ const Header = () => {
 					</div>
 				</div>
 			</div>
-			<div className='w-full py-4 bg-[#333]'>
-				<div
-					className={`${breakpoints} flex items-center justify-between`}
-				>
-					<ul className='flex items-center gap-8'>
-						{menuItems.map((item, index) => (
-							<li key={index}>
-								<Link
-									href={item.href}
-									className='text-white font-medium text-sm flex items-center gap-1'
-								>
-									{item.title}
-									<span>{item.icon}</span>
-								</Link>
-							</li>
-						))}
-					</ul>
-					<div className='flex items-center gap-2 text-white font-medium text-sm'>
-						<span className='text-xl'>
-							<FiPhoneCall />
-						</span>
-						<span>(219) 555-0114</span>
-					</div>
-				</div>
-			</div>
+			<Category></Category>
 		</header>
 	);
 };
