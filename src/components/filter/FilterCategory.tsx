@@ -46,7 +46,7 @@ const FilterCategory = ({
 							value={selectedBrand}
 							onValueChange={setSelectedBrand}
 						>
-							<div className='flex items-center space-x-2'>
+							<div className='flex items-center space-x-2 '>
 								<RadioGroupItem value={""} id='clear-filter' />
 								<Label
 									htmlFor='clear-filter'

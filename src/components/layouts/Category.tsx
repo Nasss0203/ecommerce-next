@@ -26,7 +26,6 @@ const Category = () => {
 	});
 	const itemsCategory: IData<ICategory[]> = data;
 	const items = itemsCategory?.data;
-	console.log(" items~", items);
 	return (
 		<div className='w-full py-4 bg-[#333]'>
 			<div className={`${breakpoints} flex items-center justify-between`}>

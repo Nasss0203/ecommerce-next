@@ -29,7 +29,7 @@ export default function RootLayout({
 					type='image/x-icon'
 				/>
 			</head>
-			<body className={`${poppins.className}`}>
+			<body className={`${poppins.className} mdl-js`}>
 				<LayoutMain>{children}</LayoutMain>
 				<Toaster />
 			</body>

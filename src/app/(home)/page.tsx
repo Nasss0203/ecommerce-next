@@ -13,6 +13,7 @@ const Home = () => {
 	});
 	const itemsProduct: ProductTypes = data;
 	const items = itemsProduct?.data?.data;
+	console.log(" items~", items);
 	return (
 		<div className='flex flex-col gap-6'>
 			<div className='flex items-center justify-between'>
@@ -34,6 +35,7 @@ const Home = () => {
 						title={item.product_name}
 						rate={4.5}
 						key={item._id}
+						brand={item?.product_brand?.brand_name}
 					></CardItems>
 				))}
 			</div>

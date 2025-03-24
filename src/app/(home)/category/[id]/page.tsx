@@ -84,6 +84,9 @@ export default function Category() {
 											price_discount={item.product_price}
 											title={item.product_name}
 											rate={4.5}
+											brand={
+												item.product_brand?.brand_name
+											}
 											key={item._id}
 										></CardItems>
 									))}

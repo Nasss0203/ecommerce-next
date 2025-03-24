@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/dialog";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
 import { useState } from "react";
 import { BsBag } from "react-icons/bs";
 import { FaMinus, FaPlus } from "react-icons/fa6";
@@ -17,38 +16,50 @@ import { GoStarFill } from "react-icons/go";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoBagOutline } from "react-icons/io5";
 import { LuDot } from "react-icons/lu";
-import { MdOutlineRemoveRedEye, MdOutlineStarPurple500 } from "react-icons/md";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { Rating } from "../vote";
 
 interface ICardItems {
-	_id: string;
+	_id?: string;
 	path?: string;
 	image: string;
 	title?: string;
 	price?: number;
 	price_discount?: number;
+	brand?: string;
 	rate?: number;
 	sale?: number;
 }
 
 const CardItems = (props: ICardItems) => {
-	const { image, path, title, price, price_discount, rate, sale, _id } =
-		props;
-	const params = useParams(); // useParams() chỉ chạy được trong Client Component
+	const {
+		image,
+		path,
+		title,
+		price,
+		price_discount,
+		rate,
+		sale,
+		_id,
+		brand,
+	} = props;
 
 	return (
 		<div className='relative group  flex flex-col h-full'>
 			<Link
 				href={`/details/${_id}`}
-				className='p-[5px] border border-[#E5E5E5] flex flex-col transition delay-150 duration-300 ease-in-out hover:shadow-lg pt-4'
+				className='p-[5px] border border-[#E5E5E5] flex flex-col transition delay-150 duration-300 ease-in-out hover:shadow-lg'
 			>
-				<div className='h-[254px] w-[254px]'>
-					<Image
-						src={image}
-						alt={"title as string"}
-						width={254}
-						height={230}
-						className='object-cover shrink w-full h-full'
-					></Image>
+				<div className='w-full h-full py-5 bg-white flex items-center justify-center'>
+					<div className='h-[250px] w-[250px] bg-white'>
+						<Image
+							src={image}
+							alt={"title as string"}
+							width={254}
+							height={230}
+							className='object-cover shrink w-full h-full'
+						></Image>
+					</div>
 				</div>
 				<div className='p-3 flex justify-between items-center'>
 					<div className='flex flex-col gap-y-1'>
@@ -77,7 +88,14 @@ const CardItems = (props: ICardItems) => {
 					<div className='w-10 h-10 bg-[#fff] border border-[#E5E5E5] text-xl text-neutral-500 rounded-full flex justify-center items-center cursor-pointer'>
 						<IoMdHeartEmpty />
 					</div>
-					<DialogProduct></DialogProduct>
+					<DialogProduct
+						image={image}
+						price={price}
+						price_discount={price}
+						rate={rate}
+						title={title}
+						brand={brand}
+					></DialogProduct>
 				</div>
 			</div>
 			<div className='right-0 bottom-0 p-4 absolute'>
@@ -101,7 +119,8 @@ const CardItems = (props: ICardItems) => {
 	);
 };
 
-function DialogProduct() {
+function DialogProduct(props: ICardItems) {
+	const { image, title, price, price_discount, rate, brand } = props;
 	const [count, setCount] = useState<number>(0);
 	return (
 		<Dialog>
@@ -113,8 +132,8 @@ function DialogProduct() {
 			<DialogContent className='flex gap-6 w-[1000px]'>
 				<div className='w-[500px] '>
 					<Image
-						src={"/image2.png"}
-						alt=''
+						src={image}
+						alt={title as string}
 						width={600}
 						height={600}
 						className='object-cover w-full h-full'
@@ -122,7 +141,7 @@ function DialogProduct() {
 				</div>
 				<DialogHeader>
 					<DialogTitle className='flex gap-1 text-xl items-center'>
-						Chinese Cabbage
+						{title}
 						<span className='px-2 py-1 inline-flex rounded-sm bg-green-300 text-green-700 text-xs font-normal'>
 							In Stock
 						</span>
@@ -131,14 +150,7 @@ function DialogProduct() {
 						<div className='flex items-center gap-1'>
 							<div className='flex items-center gap-1'>
 								<div className='items-center flex gap-0.5'>
-									{Array(5)
-										.fill(0)
-										.map((_, index) => (
-											<MdOutlineStarPurple500
-												key={index}
-												className='text-yellow-500'
-											/>
-										))}
+									<Rating star={rate as number}></Rating>
 								</div>
 								<span className='text-sm text-[#666]'>
 									4.93
@@ -155,10 +167,10 @@ function DialogProduct() {
 						<div className='items-center flex gap-3 pb-5 border-b border-[#E5E5E5]'>
 							<div className='flex items-center gap-1'>
 								<span className='text-[#B3B3B3] line-through text-xl font-normal'>
-									$48.00
+									{price?.toLocaleString("vi-VN")}
 								</span>
 								<span className='text-[#2C742F] line-clamp-none text-2xl'>
-									$17.28
+									{price_discount?.toLocaleString("vi-VN")}
 								</span>
 							</div>
 							<div className='px-2.5 py-2 rounded-full bg-red-100 text-red-500 text-xs'>
@@ -169,7 +181,13 @@ function DialogProduct() {
 							<div className=''>
 								<div className='flex items-center'>
 									<span className='text-[#1A1A1A] text-sm'>
-										Brand:
+										Brand:{" "}
+										{brand && (
+											<>
+												{brand.charAt(0).toUpperCase()}
+												{brand.slice(1)}
+											</>
+										)}
 									</span>
 									<span></span>
 								</div>
