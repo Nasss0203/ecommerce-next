@@ -7,7 +7,10 @@ export interface IProduct {
 	product_images?: [string];
 	product_slug?: string;
 	product_quantity?: number;
-	product_category?: string;
+	product_category?: {
+		_id: string;
+		category_name: string;
+	};
 	product_brand?: {
 		_id: string;
 		brand_name: string;

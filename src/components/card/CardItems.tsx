@@ -10,7 +10,7 @@ import { DialogProduct } from "../product";
 const CardItems = (props: ICardItems) => {
 	const {
 		image,
-		path,
+		category,
 		title,
 		price,
 		price_discount,
@@ -23,7 +23,7 @@ const CardItems = (props: ICardItems) => {
 	return (
 		<div className='relative group  flex flex-col h-full'>
 			<Link
-				href={`/details/${_id}`}
+				href={`${category}/${brand}/${_id}`}
 				className='p-[5px] border border-[#E5E5E5] flex flex-col transition delay-150 duration-300 ease-in-out hover:shadow-lg'
 			>
 				<div className='w-full h-full py-5 bg-white flex items-center justify-center'>

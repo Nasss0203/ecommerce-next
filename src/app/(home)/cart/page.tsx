@@ -80,7 +80,7 @@ const Cart = () => {
 							<tbody>
 								{Array.isArray(response?.cart_products) &&
 									response.cart_products.map(
-										(items, index) => (
+										(items, index: any) => (
 											<tr
 												className='border-b text-center '
 												key={items.productId}

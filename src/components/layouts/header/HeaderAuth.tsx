@@ -13,7 +13,6 @@ import {
 import { breakpoints } from "@/constants";
 import { useUser } from "@/hooks/useUser";
 import { cn } from "@/lib/utils";
-import { useQueryClient } from "@tanstack/react-query";
 import { BadgeCheck, Bell, CreditCard, LogOut, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { CiLocationOn } from "react-icons/ci";
@@ -21,7 +20,6 @@ import { IoIosArrowDown } from "react-icons/io";
 
 const HeaderAuth = () => {
 	const { user, setUser } = useUser();
-	const queryClient = useQueryClient();
 
 	const handleLogout = async () => {
 		await logout();

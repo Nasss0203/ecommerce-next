@@ -11,7 +11,7 @@ const Home = () => {
 		queryKey: ["product"],
 		queryFn: () => findAllProduct({ limit: 20 }),
 	});
-	
+
 	const itemsProduct: ProductTypes = data;
 	const items = itemsProduct?.data?.data;
 	return (
@@ -28,6 +28,7 @@ const Home = () => {
 			<div className='grid grid-cols-5'>
 				{items?.map((item: IProduct, index) => (
 					<CardItems
+						category={item.product_category?.category_name}
 						_id={item._id}
 						image={item.product_thumb}
 						price={item.product_price}

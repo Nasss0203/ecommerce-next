@@ -19,6 +19,7 @@ import { LuDot } from "react-icons/lu";
 const Details = () => {
 	const [count, setCount] = useState<number>(1);
 	const { id } = useParams();
+	console.log(" id~", id);
 	const { addToCart } = useAddCart();
 	const { user } = useUser();
 

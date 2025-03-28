@@ -26,6 +26,7 @@ const HeaderCategory = () => {
 	});
 	const itemsCategory: IData<ICategory[]> = data;
 	const items = itemsCategory?.data;
+	console.log(" items~", items);
 	return (
 		<div className='w-full py-4 bg-[#333]'>
 			<div className={`${breakpoints} flex items-center justify-between`}>
@@ -33,7 +34,7 @@ const HeaderCategory = () => {
 					{items?.map((item, index) => (
 						<li key={index}>
 							<Link
-								href={`/category/${item?._id}`}
+								href={`/${item.category_name}`} // Đổi từ `/category/${item._id}` thành `/${item.category_name}`
 								className='text-white font-medium text-sm flex items-center gap-1'
 							>
 								{item.category_name}

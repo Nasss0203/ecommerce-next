@@ -41,4 +41,5 @@ interface ICardItems {
 	brand?: string;
 	rate?: number;
 	sale?: number;
+	category?: string;
 }
