@@ -1,4 +1,3 @@
-import { LayoutMain } from "@/components/layouts";
 import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
@@ -21,7 +20,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang='en'>
+		<html lang='en' suppressHydrationWarning>
 			<head>
 				<link
 					rel='shortcut icon'
@@ -29,8 +28,11 @@ export default function RootLayout({
 					type='image/x-icon'
 				/>
 			</head>
-			<body className={`${poppins.className} mdl-js`}>
-				<LayoutMain>{children}</LayoutMain>
+			<body
+				className={`${poppins.className} antialiased`}
+				suppressHydrationWarning
+			>
+				{children}
 				<Toaster />
 			</body>
 		</html>

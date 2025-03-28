@@ -1,10 +1,59 @@
 "use client";
+import { useAddCart } from "@/hooks/useCart";
+import { useUser } from "@/hooks/useUser";
+import { ICart } from "@/types/cart.type";
 import Image from "next/image";
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
+import { MdCancel } from "react-icons/md";
 
 const Cart = () => {
-	const [count, setCount] = useState<number>(0);
+	const { updateCartItem, dataListCart, removeFromCart } = useAddCart();
+	const [quantities, setQuantities] = useState<Record<string, number>>({});
+	const { user } = useUser();
+
+	const response: ICart = dataListCart?.data;
+
+	useEffect(() => {
+		if (response?.cart_products) {
+			const initialQuantities = response.cart_products.reduce(
+				(acc, item) => {
+					acc[item.productId] = item.quantity;
+					return acc;
+				},
+				{} as Record<string, number>,
+			);
+			setQuantities(initialQuantities);
+		}
+	}, [response]);
+
+	const handleUpdateQuantity = (productId: string, newQuantity: number) => {
+		if (newQuantity < 1) return;
+
+		const currentProduct = response?.cart_products.find(
+			(item) => item.productId === productId,
+		);
+		if (!currentProduct) return;
+
+		setQuantities((prev) => ({
+			...prev,
+			[productId]: newQuantity,
+		}));
+
+		updateCartItem({
+			userId: user._id,
+			item_products: [
+				{
+					old_quantity: currentProduct.quantity,
+					price: currentProduct.price,
+					productId: productId,
+					quantity: newQuantity,
+				},
+			],
+		});
+	};
+
 	return (
 		<div>
 			<div className='flex space-x-5'>
@@ -13,72 +62,123 @@ const Cart = () => {
 						<table className='w-full border-collapse'>
 							<thead>
 								<tr className='border-b'>
-									<th className='text-left p-3'>Product</th>
-									<th className='p-3'>Price</th>
-									<th className='p-3'>Quantity</th>
-									<th className='p-3'>Subtotal</th>
-									<th className='p-3'></th>
+									<th className='text-left p-3 w-[40%]'>
+										Product
+									</th>
+									<th className='text-center p-3 w-[20%]'>
+										Price
+									</th>
+									<th className='text-center p-3 w-[20%]'>
+										Quantity
+									</th>
+									<th className='text-center p-3 w-[20%]'>
+										Subtotal
+									</th>
+									<th className='text-center p-3 w-[5%]'></th>
 								</tr>
 							</thead>
 							<tbody>
-								{Array(3)
-									.fill(0)
-									.map((_, index) => (
-										<tr className='border-b' key={index}>
-											<td className='flex items-center gap-4 p-3'>
-												<Image
-													src='/Image.png'
-													alt='Green Capsicum'
-													className='w-12 h-12 object-cover rounded'
-													width={48}
-													height={48}
-												/>
-												Green Capsicum
-											</td>
-											<td className='text-center p-3'>
-												$14.00
-											</td>
-											<td className='text-center p-3'>
-												<div className='inline-flex items-center border border-gray-300 rounded-full px-2 py-1.5'>
-													<button
-														className='w-9 h-9 flex items-center justify-center text-gray-700 bg-gray-100 rounded-full cursor-pointer'
-														type='button'
-														onClick={() =>
-															setCount(count - 1)
-														}
-													>
-														<FaMinus />
-													</button>
-													<span className='px-3 w-12 text-center'>
-														{count}
+								{Array.isArray(response?.cart_products) &&
+									response.cart_products.map(
+										(items, index) => (
+											<tr
+												className='border-b text-center '
+												key={items.productId}
+											>
+												<td className='flex items-center gap-4 p-3 flex-1'>
+													<Image
+														src={items.image}
+														alt={items.name}
+														className='w-12 h-12 object-cover rounded'
+														width={48}
+														height={48}
+													/>
+													<span className='truncate'>
+														{items.name}
 													</span>
+												</td>
+												<td className='p-3 w-[20%]'>
+													{items.price.toLocaleString(
+														"vi-VN",
+													)}
+												</td>
+												<td className='p-3 w-[20%]'>
+													<div className='flex items-center justify-center gap-2'>
+														<button
+															className='w-8 h-8 flex items-center justify-center text-gray-700 bg-gray-100 rounded-full cursor-pointer'
+															type='button'
+															onClick={() =>
+																handleUpdateQuantity(
+																	items.productId,
+																	Math.max(
+																		(quantities[
+																			items
+																				.productId
+																		] ||
+																			items.quantity) -
+																			1,
+																		1,
+																	),
+																)
+															}
+														>
+															<FaMinus />
+														</button>
+														<span className='w-8 text-center'>
+															{items.quantity}
+														</span>
+														<button
+															className='w-8 h-8 flex items-center justify-center text-gray-700 bg-gray-100 rounded-full cursor-pointer'
+															type='button'
+															onClick={() =>
+																handleUpdateQuantity(
+																	items.productId,
+																	(quantities[
+																		items
+																			.productId
+																	] ||
+																		items.quantity) +
+																		1,
+																)
+															}
+														>
+															<FaPlus />
+														</button>
+													</div>
+												</td>
+												<td className='p-3 w-[20%]'>
+													{(
+														items.price *
+														items.quantity
+													).toLocaleString("vi-VN")}
+												</td>
+												<td className='p-3 w-[5%]'>
 													<button
-														className='w-10 h-10 flex items-center justify-center text-gray-700 bg-gray-100 rounded-full  cursor-pointer'
-														type='button'
 														onClick={() =>
-															setCount(count + 1)
+															removeFromCart({
+																userId: user._id,
+																productId:
+																	items.productId,
+															})
 														}
+														className='text-red-500 text-2xl cursor-pointer'
 													>
-														<FaPlus />
+														<MdCancel />
 													</button>
-												</div>
-											</td>
-											<td className='text-center p-3'>
-												$70.00
-											</td>
-											<td className='text-center p-3'>
-												<button className='text-red-500'>
-													×
-												</button>
-											</td>
-										</tr>
-									))}
+												</td>
+											</tr>
+										),
+									)}
 							</tbody>
 						</table>
+
 						<div className='flex justify-between items-center mt-4'>
-							<button className='px-4 py-2 border rounded'>
+							<Link
+								href={"/"}
+								className='px-4 py-2 border rounded'
+							>
 								Return to shop
-							</button>
+							</Link>
 							<button className='px-4 py-2 bg-gray-900 text-white rounded'>
 								Update Cart
 							</button>

@@ -9,11 +9,11 @@ import { FaArrowRightLong } from "react-icons/fa6";
 const Home = () => {
 	const { isPending, error, data } = useQuery({
 		queryKey: ["product"],
-		queryFn: () => findAllProduct({}),
+		queryFn: () => findAllProduct({ limit: 20 }),
 	});
+	
 	const itemsProduct: ProductTypes = data;
 	const items = itemsProduct?.data?.data;
-	console.log(" items~", items);
 	return (
 		<div className='flex flex-col gap-6'>
 			<div className='flex items-center justify-between'>

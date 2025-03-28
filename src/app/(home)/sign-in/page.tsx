@@ -12,18 +12,22 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useUser } from "@/hooks/useUser";
 import { IBackend } from "@/types";
 import { IAuth } from "@/types/auth";
 import { LoginSchema, LoginSchemaType } from "@/validator/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const SignIn = () => {
+	const { setUser } = useUser();
+	const queryClient = useQueryClient();
 	const router = useRouter();
+
 	const form = useForm<LoginSchemaType>({
 		resolver: zodResolver(LoginSchema),
 		defaultValues: {
@@ -37,6 +41,9 @@ const SignIn = () => {
 		onSuccess: (data: IBackend<IAuth>) => {
 			console.log(" data~", data);
 			toast.success(data.message);
+			setUser(data.data as IAuth);
+			queryClient.invalidateQueries({ queryKey: ["auth"] });
+
 			router.push("/");
 		},
 
@@ -61,6 +68,7 @@ const SignIn = () => {
 							<form
 								onSubmit={form.handleSubmit(onSubmit)}
 								className='space-y-5'
+								autoComplete='off'
 							>
 								<div className='space-y-4'>
 									<FormField

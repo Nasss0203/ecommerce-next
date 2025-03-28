@@ -3,6 +3,8 @@ import { getDetailProduct } from "@/api/product.api";
 import { RelatedProduct, TabProduct } from "@/components/product";
 import { Rating } from "@/components/vote";
 import { breakpoints } from "@/constants";
+import { useAddCart } from "@/hooks/useCart";
+import { useUser } from "@/hooks/useUser";
 import { IData } from "@/types";
 import { IProduct } from "@/types/product";
 import { useQuery } from "@tanstack/react-query";
@@ -15,8 +17,10 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { LuDot } from "react-icons/lu";
 
 const Details = () => {
-	const [count, setCount] = useState<number>(0);
+	const [count, setCount] = useState<number>(1);
 	const { id } = useParams();
+	const { addToCart } = useAddCart();
+	const { user } = useUser();
 
 	const { data, isPending, error } = useQuery({
 		queryKey: ["product", id],
@@ -30,7 +34,20 @@ const Details = () => {
 
 	const itemsProduct: IData<IProduct> | null = data;
 	const items = itemsProduct?.data;
-	console.log(" items~", items);
+
+	const handleAddtoCart = async () => {
+		const userId = user?._id;
+		const products = {
+			productId: items?._id,
+			quantity: count,
+			name: items?.product_name,
+			image: items?.product_thumb,
+			price: items?.product_price,
+		};
+
+		addToCart({ userId, products });
+	};
+
 	return (
 		<div>
 			<div className={`${breakpoints} flex flex-col gap-6`}>
@@ -121,7 +138,11 @@ const Details = () => {
 									<button
 										className='w-9 h-9 flex items-center justify-center text-gray-700 bg-gray-100 rounded-full cursor-pointer'
 										type='button'
-										onClick={() => setCount(count - 1)}
+										onClick={() =>
+											setCount((prev) =>
+												Math.max(1, prev - 1),
+											)
+										}
 									>
 										<FaMinus />
 									</button>
@@ -131,7 +152,9 @@ const Details = () => {
 									<button
 										className='w-10 h-10 flex items-center justify-center text-gray-700 bg-gray-100 rounded-full  cursor-pointer'
 										type='button'
-										onClick={() => setCount(count + 1)}
+										onClick={() =>
+											setCount((prev) => prev + 1)
+										}
 									>
 										<FaPlus />
 									</button>
@@ -139,6 +162,7 @@ const Details = () => {
 								<button
 									className='bg-[#616ff6] flex-1 text-white font-medium rounded-full px-10 py-4 flex justify-center items-center gap-2  transition-colors'
 									type='button'
+									onClick={handleAddtoCart}
 								>
 									Add to Cart
 									<span className='text-xl'>

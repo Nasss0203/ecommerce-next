@@ -19,7 +19,7 @@ const menuItems: {
 		href: "/category/d=",
 	},
 ];
-const Category = () => {
+const HeaderCategory = () => {
 	const { isPending, error, data } = useQuery({
 		queryKey: ["category"],
 		queryFn: () => findAllCategory(),
@@ -52,4 +52,4 @@ const Category = () => {
 	);
 };
 
-export default Category;
+export default HeaderCategory;

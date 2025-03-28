@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
 	images: {
 		unoptimized: true,
 	},
+	// turboMode: false,
 };
 
 export default nextConfig;

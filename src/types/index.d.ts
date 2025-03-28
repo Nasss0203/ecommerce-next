@@ -30,3 +30,15 @@ export interface IData<T> {
 }
 
 export type ProductTypes = IBackend<IData<IProduct[]>>;
+
+interface ICardItems {
+	_id?: string;
+	path?: string;
+	image: string;
+	title?: string;
+	price?: number;
+	price_discount?: number;
+	brand?: string;
+	rate?: number;
+	sale?: number;
+}
