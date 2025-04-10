@@ -21,7 +21,7 @@ const FilterCategory = ({
 	setSelectedBrand: (id: string) => void;
 }) => {
 	const [range, setRange] = useState([0, 100]);
-	const { isPending, error, data } = useQuery({
+	const { data } = useQuery({
 		queryKey: ["brand"],
 		queryFn: () => findAllBrand(id),
 	});
@@ -55,26 +55,31 @@ const FilterCategory = ({
 									All
 								</Label>
 							</div>
-							{items?.map((item) => (
-								<div
-									key={item._id}
-									className='flex items-center space-x-2'
-								>
-									<RadioGroupItem
-										value={item._id}
-										id={item._id}
-									/>
-									<Label
-										htmlFor={item._id}
-										className='text-sm'
-									>
-										{item.brand_name}
-										<span className='text-[#808080]'>
-											(134)
-										</span>
-									</Label>
-								</div>
-							))}
+							{items?.map((item) => {
+								return <>
+									{
+
+										item.products.length > 0 ? <div
+											key={item._id}
+											className='flex items-center space-x-2'
+										>
+											<RadioGroupItem
+												value={item._id}
+												id={item._id}
+											/>
+											<Label
+												htmlFor={item._id}
+												className='text-sm'
+											>
+												{item.brand_name}
+												<span className='text-[#808080]'>
+													(134)
+												</span>
+											</Label>
+										</div> : null
+									}
+								</>
+							})}
 						</RadioGroup>
 
 						<hr />

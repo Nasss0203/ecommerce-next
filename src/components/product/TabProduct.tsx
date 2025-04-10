@@ -4,9 +4,16 @@ import { MdOutlineDiscount } from "react-icons/md";
 import { Feedback } from "../card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 
-const TabProduct = () => {
+interface  ITabProduct {
+	description?: string;
+
+}
+
+const TabProduct = ({description}: ITabProduct) => {
+
 	return (
 		<div className='w-full'>
+			<hr />
 			<Tabs defaultValue='descriptions' className='w-full'>
 				<div className='flex justify-center border-b py-2 border-[#E5E5E5]'>
 					<TabsList>
@@ -24,33 +31,15 @@ const TabProduct = () => {
 				<div className='flex w-full justify-between py-4'>
 					<div className='py-4 w-[50%]'>
 						<TabsContent value='descriptions'>
-							<div className=''>
-								<p>
-									Sed commodo aliquam dui ac porta. Fusce
-									ipsum felis, imperdiet at posuere ac,
-									viverra at mauris. Maecenas tincidunt ligula
-									a sem vestibulum pharetra. Maecenas auctor
-									tortor lacus, nec laoreet nisi porttitor
-									vel. Etiam tincidunt metus vel dui interdum
-									sollicitudin. Mauris sem ante, vestibulum
-									nec orci vitae, aliquam mollis lacus. Sed et
-									condimentum arcu, id molestie tellus. Nulla
-									facilisi. Nam scelerisque vitae justo a
-									convallis. Morbi urna ipsum, placerat quis
-									commodo quis, egestas elementum leo. Donec
-									convallis mollis enim. Aliquam id mi quam.
-									Phasellus nec fringilla elit. Nulla mauris
-									tellus, feugiat quis pharetra sed, gravida
-									ac dui. Sed iaculis, metus faucibus
-									elementum tincidunt, turpis mi viverra
-									velit, pellentesque tristique neque mi eget
-									nulla. Proin luctus elementum neque et
-									pharetra.
-								</p>
+						<div className="lg:line-clamp-[9] line-clamp-[4]">
+							<div className='' dangerouslySetInnerHTML={{
+								__html: description as string,
+							}}>
 							</div>
+						</div>
 						</TabsContent>
 						<TabsContent value='additional_information'>
-							Change your password here.
+							additional_information
 						</TabsContent>
 						<TabsContent value='customer_feedback'>
 							<div className='flex flex-col gap-5'>

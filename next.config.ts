@@ -6,8 +6,7 @@ const fetchCategories = async () => {
 		const res = await findAllCategory();
 		return res.data || [];
 	} catch (error) {
-		console.error("Error fetching categories:", error);
-		return [];
+		return error;
 	}
 };
 
@@ -17,7 +16,8 @@ const nextConfig: NextConfig = {
 	},
 	async rewrites() {
 		const categories = await fetchCategories();
-		return categories.flatMap((cate: any) => [
+		const data = categories || [];
+		return data?.flatMap((cate: any) => [
 			{
 				source: `/${cate.category_name}`,
 				destination: `/category/${cate._id}`,

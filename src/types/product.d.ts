@@ -4,7 +4,7 @@ export interface IProduct {
 	product_thumb: string;
 	product_description?: string;
 	product_price: number | any;
-	product_images?: [string];
+	product_images?: [any];
 	product_slug?: string;
 	product_quantity?: number;
 	product_category?: {

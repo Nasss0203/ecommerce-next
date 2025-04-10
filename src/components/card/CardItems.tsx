@@ -1,4 +1,5 @@
 "use client";
+import { useHandleAddToCart } from "@/hooks/useHandleAddCart";
 import { ICardItems } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,6 +20,17 @@ const CardItems = (props: ICardItems) => {
 		_id,
 		brand,
 	} = props;
+	const { handleAddToCart } = useHandleAddToCart();
+
+	const addCart = () => {
+		handleAddToCart({
+			productId: _id as string,
+			image,
+			name: title,
+			price: price,
+			quantity: 1,
+		});
+	};
 
 	return (
 		<div className='relative group  flex flex-col h-full'>
@@ -26,18 +38,18 @@ const CardItems = (props: ICardItems) => {
 				href={`${category}/${brand}/${_id}`}
 				className='p-[5px] border border-[#E5E5E5] flex flex-col transition delay-150 duration-300 ease-in-out hover:shadow-lg'
 			>
-				<div className='w-full h-full py-5 bg-white flex items-center justify-center'>
+				<div className='w-full h-full bg-white flex items-center justify-center py-2'>
 					<div className='h-[250px] w-[250px] bg-white'>
 						<Image
 							src={image}
 							alt={"title as string"}
 							width={254}
 							height={230}
-							className='object-cover shrink w-full h-full'
+							className='object-contain  max-w-full max-h-full'
 						></Image>
 					</div>
 				</div>
-				<div className='p-3 flex justify-between items-center'>
+				<div className='pb-3 px-3 flex justify-between items-center'>
 					<div className='flex flex-col gap-y-1'>
 						<span className='text-[#4D4D4D] text-base font-semibold line-clamp-1'>
 							{title}
@@ -65,6 +77,7 @@ const CardItems = (props: ICardItems) => {
 						<IoMdHeartEmpty />
 					</div>
 					<DialogProduct
+						_id={_id}
 						image={image}
 						price={price}
 						price_discount={price}
@@ -75,7 +88,10 @@ const CardItems = (props: ICardItems) => {
 				</div>
 			</div>
 			<div className='right-0 bottom-0 p-4 absolute'>
-				<div className='flex justify-around items-center w-10 h-10 bg-[#F2F2F2] rounded-full cursor-pointer'>
+				<div
+					className='flex justify-around items-center w-10 h-10 bg-[#F2F2F2] hover:bg-blue-400 hover:text-white rounded-full cursor-pointer'
+					onClick={addCart}
+				>
 					<IoBagOutline />
 				</div>
 			</div>

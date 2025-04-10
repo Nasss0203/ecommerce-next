@@ -35,8 +35,8 @@ interface ICardItems {
 	_id?: string;
 	path?: string;
 	image: string;
-	title?: string;
-	price?: number;
+	title: string;
+	price: number;
 	price_discount?: number;
 	brand?: string;
 	rate?: number;

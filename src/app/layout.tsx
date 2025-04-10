@@ -2,6 +2,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import "swiper/css";
 import "./globals.css";
 
 const poppins = Poppins({

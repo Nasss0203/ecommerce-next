@@ -1,3 +1,4 @@
+import { useHandleAddToCart } from "@/hooks/useHandleAddCart";
 import { ICardItems } from "@/types";
 import Image from "next/image";
 import { useState } from "react";
@@ -17,8 +18,19 @@ import {
 import { Rating } from "../vote";
 
 const DialogProduct = (props: ICardItems) => {
-	const { image, title, price, price_discount, rate, brand } = props;
+	const { image, title, price, price_discount, rate, brand, _id } = props;
 	const [count, setCount] = useState<number>(0);
+	const { handleAddToCart } = useHandleAddToCart();
+
+	const addCart = () => {
+		handleAddToCart({
+			productId: _id as string,
+			image,
+			name: title,
+			price: price,
+			quantity: 1,
+		});
+	};
 	return (
 		<Dialog>
 			<DialogTrigger className='cursor-pointer'>
@@ -120,6 +132,7 @@ const DialogProduct = (props: ICardItems) => {
 							<button
 								className='bg-[#616ff6] flex-1 text-white font-medium rounded-full px-10 py-4 flex justify-center items-center gap-2  transition-colors'
 								type='button'
+								onClick={addCart}
 							>
 								Add to Cart
 								<span className='text-xl'>

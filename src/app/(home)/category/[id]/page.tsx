@@ -2,6 +2,7 @@
 import { findAllProduct } from "@/api/product.api";
 import { CardItems } from "@/components/card";
 import { FilterCategory } from "@/components/filter";
+import { CardSkeleton } from "@/components/skeleton";
 import {
 	Pagination,
 	PaginationContent,
@@ -28,7 +29,7 @@ export default function Category() {
 	const { id } = useParams();
 	const [selectedBrand, setSelectedBrand] = useState<string>("");
 	console.log(" selectedBrand~", selectedBrand);
-	const { isPending, error, data } = useQuery({
+	const { isPending, data } = useQuery({
 		queryKey: ["product", id, selectedBrand],
 		queryFn: () =>
 			findAllProduct({
@@ -39,6 +40,7 @@ export default function Category() {
 			}),
 	});
 	const itemsCategory: ProductTypes = data;
+	console.log(" itemsCategory~", itemsCategory);
 	const items = itemsCategory?.data?.data;
 
 	return (
@@ -73,16 +75,26 @@ export default function Category() {
 					<div className='flex flex-col space-y-5'>
 						<div className='grid grid-cols-4'>
 							{isPending ? (
-								<div>Loading...</div>
+								Array(10)
+									.fill(0)
+									.map((_item, index) => (
+										<CardSkeleton
+											key={index}
+										></CardSkeleton>
+									))
 							) : (
 								<>
-									{items?.map((item: IProduct, index) => (
+									{items?.map((item: IProduct) => (
 										<CardItems
 											_id={item._id}
 											image={item.product_thumb}
 											price={item.product_price}
 											price_discount={item.product_price}
 											title={item.product_name}
+											category={
+												item.product_category
+													?.category_name
+											}
 											rate={4.5}
 											brand={
 												item.product_brand?.brand_name

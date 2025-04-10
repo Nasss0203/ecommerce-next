@@ -11,7 +11,8 @@ const HeaderCart = () => {
 	const { dataListCart } = useAddCart();
 
 	const response: ICart = dataListCart?.data;
-	const lengthCart = response?.cart_products.length;
+	const lengthCart = response?.cart_products?.length;
+
 	return (
 		<div
 			className={`flex items-center justify-between py-5 ${breakpoints}`}

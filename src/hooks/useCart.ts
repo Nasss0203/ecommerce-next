@@ -67,7 +67,7 @@ export function useAddCart() {
 				],
 			}),
 
-		onSuccess: (data, { userId }) => {
+		onSuccess: (data) => {
 			queryClient.invalidateQueries({ queryKey: ["cart"] });
 		},
 
@@ -91,7 +91,7 @@ export function useAddCart() {
 			productId: string;
 		}) => await deleteCart({ userId, productId }),
 
-		onSuccess: (data, { userId }) => {
+		onSuccess: (data) => {
 			console.log("Cart item deleted:", data);
 			queryClient.invalidateQueries({ queryKey: ["cart"] });
 		},

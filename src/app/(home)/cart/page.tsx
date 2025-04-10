@@ -79,96 +79,93 @@ const Cart = () => {
 							</thead>
 							<tbody>
 								{Array.isArray(response?.cart_products) &&
-									response.cart_products.map(
-										(items, index: any) => (
-											<tr
-												className='border-b text-center '
-												key={items.productId}
-											>
-												<td className='flex items-center gap-4 p-3 flex-1'>
-													<Image
-														src={items.image}
-														alt={items.name}
-														className='w-12 h-12 object-cover rounded'
-														width={48}
-														height={48}
-													/>
-													<span className='truncate'>
-														{items.name}
-													</span>
-												</td>
-												<td className='p-3 w-[20%]'>
-													{items.price.toLocaleString(
-														"vi-VN",
-													)}
-												</td>
-												<td className='p-3 w-[20%]'>
-													<div className='flex items-center justify-center gap-2'>
-														<button
-															className='w-8 h-8 flex items-center justify-center text-gray-700 bg-gray-100 rounded-full cursor-pointer'
-															type='button'
-															onClick={() =>
-																handleUpdateQuantity(
-																	items.productId,
-																	Math.max(
-																		(quantities[
-																			items
-																				.productId
-																		] ||
-																			items.quantity) -
-																			1,
-																		1,
-																	),
-																)
-															}
-														>
-															<FaMinus />
-														</button>
-														<span className='w-8 text-center'>
-															{items.quantity}
-														</span>
-														<button
-															className='w-8 h-8 flex items-center justify-center text-gray-700 bg-gray-100 rounded-full cursor-pointer'
-															type='button'
-															onClick={() =>
-																handleUpdateQuantity(
-																	items.productId,
+									response.cart_products.map((items) => (
+										<tr
+											className='border-b text-center '
+											key={items.productId}
+										>
+											<td className='flex items-center gap-4 p-3 flex-1'>
+												<Image
+													src={items.image}
+													alt={items.name}
+													className='w-12 h-12 object-cover rounded'
+													width={48}
+													height={48}
+												/>
+												<span className='truncate'>
+													{items.name}
+												</span>
+											</td>
+											<td className='p-3 w-[20%]'>
+												{items.price.toLocaleString(
+													"vi-VN",
+												)}
+											</td>
+											<td className='p-3 w-[20%]'>
+												<div className='flex items-center justify-center gap-2'>
+													<button
+														className='w-8 h-8 flex items-center justify-center text-gray-700 bg-gray-100 rounded-full cursor-pointer'
+														type='button'
+														onClick={() =>
+															handleUpdateQuantity(
+																items.productId,
+																Math.max(
 																	(quantities[
 																		items
 																			.productId
 																	] ||
-																		items.quantity) +
+																		items.quantity) -
 																		1,
-																)
-															}
-														>
-															<FaPlus />
-														</button>
-													</div>
-												</td>
-												<td className='p-3 w-[20%]'>
-													{(
-														items.price *
-														items.quantity
-													).toLocaleString("vi-VN")}
-												</td>
-												<td className='p-3 w-[5%]'>
-													<button
-														onClick={() =>
-															removeFromCart({
-																userId: user._id,
-																productId:
-																	items.productId,
-															})
+																	1,
+																),
+															)
 														}
-														className='text-red-500 text-2xl cursor-pointer'
 													>
-														<MdCancel />
+														<FaMinus />
 													</button>
-												</td>
-											</tr>
-										),
-									)}
+													<span className='w-8 text-center'>
+														{items.quantity}
+													</span>
+													<button
+														className='w-8 h-8 flex items-center justify-center text-gray-700 bg-gray-100 rounded-full cursor-pointer'
+														type='button'
+														onClick={() =>
+															handleUpdateQuantity(
+																items.productId,
+																(quantities[
+																	items
+																		.productId
+																] ||
+																	items.quantity) +
+																	1,
+															)
+														}
+													>
+														<FaPlus />
+													</button>
+												</div>
+											</td>
+											<td className='p-3 w-[20%]'>
+												{(
+													items.price * items.quantity
+												).toLocaleString("vi-VN")}
+											</td>
+											<td className='p-3 w-[5%]'>
+												<button
+													onClick={() =>
+														removeFromCart({
+															userId: user._id,
+															productId:
+																items.productId,
+														})
+													}
+													className='text-red-500 text-2xl cursor-pointer'
+												>
+													<MdCancel />
+												</button>
+											</td>
+										</tr>
+									))}
 							</tbody>
 						</table>
 

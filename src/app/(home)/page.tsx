@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FaArrowRightLong } from "react-icons/fa6";
 
 const Home = () => {
-	const { isPending, error, data } = useQuery({
+	const { data } = useQuery({
 		queryKey: ["product"],
 		queryFn: () => findAllProduct({ limit: 20 }),
 	});
@@ -26,7 +26,7 @@ const Home = () => {
 				</div>
 			</div>
 			<div className='grid grid-cols-5'>
-				{items?.map((item: IProduct, index) => (
+				{items?.map((item: IProduct) => (
 					<CardItems
 						category={item.product_category?.category_name}
 						_id={item._id}
