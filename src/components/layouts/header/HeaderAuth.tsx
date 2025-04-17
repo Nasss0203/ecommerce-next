@@ -41,11 +41,11 @@ const HeaderAuth = () => {
 			<div className='flex items-center gap-2'>
 				<div className='flex items-center gap-4 '>
 					<div className='flex items-center gap-1'>
-						<span>ENG</span>
+						<span>VIE</span>
 						<IoIosArrowDown />
 					</div>
 					<div className='flex items-center gap-1'>
-						<span>USD</span>
+						<span>VND</span>
 						<IoIosArrowDown />
 					</div>
 				</div>
@@ -115,9 +115,9 @@ const HeaderAuth = () => {
 					</DropdownMenu>
 				) : (
 					<div className='flex items-center gap-1'>
-						<Link href={"/sign-in"}>Sign in</Link>
+						<Link href={"/sign-in"}>Đăng nhập</Link>
 						<span>/</span>
-						<Link href={"/sign-up"}>Sign up</Link>
+						<Link href={"/sign-up"}>Đăng ký</Link>
 					</div>
 				)}
 			</div>

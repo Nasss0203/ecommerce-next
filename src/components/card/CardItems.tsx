@@ -1,12 +1,13 @@
 "use client";
 import { useHandleAddToCart } from "@/hooks/useHandleAddCart";
+import { useUser } from "@/hooks/useUser";
 import { ICardItems } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import { GoStarFill } from "react-icons/go";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoBagOutline } from "react-icons/io5";
-import { DialogProduct } from "../product";
+import { DialogAuth, DialogProduct } from "../dialog";
 
 const CardItems = (props: ICardItems) => {
 	const {
@@ -21,6 +22,7 @@ const CardItems = (props: ICardItems) => {
 		brand,
 	} = props;
 	const { handleAddToCart } = useHandleAddToCart();
+	const { user } = useUser();
 
 	const addCart = () => {
 		handleAddToCart({
@@ -84,16 +86,25 @@ const CardItems = (props: ICardItems) => {
 						rate={rate}
 						title={title}
 						brand={brand}
+						category={category}
 					></DialogProduct>
 				</div>
 			</div>
 			<div className='right-0 bottom-0 p-4 absolute'>
-				<div
-					className='flex justify-around items-center w-10 h-10 bg-[#F2F2F2] hover:bg-blue-400 hover:text-white rounded-full cursor-pointer'
-					onClick={addCart}
-				>
-					<IoBagOutline />
-				</div>
+				{user ? (
+					<div
+						className='flex justify-around items-center w-10 h-10 bg-[#F2F2F2] hover:bg-blue-400 hover:text-white rounded-full cursor-pointer'
+						onClick={addCart}
+					>
+						<IoBagOutline />
+					</div>
+				) : (
+					<DialogAuth>
+						<div className='flex justify-around items-center w-10 h-10 bg-[#F2F2F2] hover:bg-blue-400 hover:text-white rounded-full cursor-pointer'>
+							<IoBagOutline />
+						</div>
+					</DialogAuth>
+				)}
 			</div>
 			{sale ? (
 				<div

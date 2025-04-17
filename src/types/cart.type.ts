@@ -1,4 +1,5 @@
 export interface ICart {
+	_id?: string;
 	cart_state: string;
 	cart_products: [
 		{

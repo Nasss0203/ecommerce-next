@@ -1,19 +1,23 @@
 "use client";
+import { reviewCheckout } from "@/api/checkout.api";
 import { useAddCart } from "@/hooks/useCart";
 import { useUser } from "@/hooks/useUser";
 import { ICart } from "@/types/cart.type";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Fragment, useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { MdCancel } from "react-icons/md";
 
 const Cart = () => {
+	const router = useRouter();
 	const { updateCartItem, dataListCart, removeFromCart } = useAddCart();
 	const [quantities, setQuantities] = useState<Record<string, number>>({});
 	const { user } = useUser();
 
 	const response: ICart = dataListCart?.data;
+	console.log(" response~", response);
 
 	useEffect(() => {
 		if (response?.cart_products) {
@@ -54,6 +58,34 @@ const Cart = () => {
 		});
 	};
 
+	const product = response?.cart_products || [];
+
+	const totalPrice = product?.reduce((sum, product) => {
+		return sum + product.price * product.quantity;
+	}, 0);
+
+	const handleCheckout = async () => {
+		const res = await reviewCheckout({
+			cartId: response._id as string,
+			userId: user._id,
+			order_ids: [
+				{
+					userId: user._id,
+					item_products: product.map((item) => ({
+						productId: item.productId,
+						price: item.price,
+						quantity: item.quantity,
+						image: item.image,
+					})),
+				},
+			],
+		});
+
+		if (res && res.data) {
+			router.push("/checkout");
+		}
+	};
+
 	return (
 		<div>
 			<div className='flex space-x-5'>
@@ -78,97 +110,117 @@ const Cart = () => {
 								</tr>
 							</thead>
 							<tbody>
-								{Array.isArray(response?.cart_products) &&
-									response.cart_products.map((items) => (
-										<tr
-											className='border-b text-center '
-											key={items.productId}
-										>
-											<td className='flex items-center gap-4 p-3 flex-1'>
-												<Image
-													src={items.image}
-													alt={items.name}
-													className='w-12 h-12 object-cover rounded'
-													width={48}
-													height={48}
-												/>
-												<span className='truncate'>
-													{items.name}
-												</span>
-											</td>
-											<td className='p-3 w-[20%]'>
-												{items.price.toLocaleString(
-													"vi-VN",
-												)}
-											</td>
-											<td className='p-3 w-[20%]'>
-												<div className='flex items-center justify-center gap-2'>
-													<button
-														className='w-8 h-8 flex items-center justify-center text-gray-700 bg-gray-100 rounded-full cursor-pointer'
-														type='button'
-														onClick={() =>
-															handleUpdateQuantity(
-																items.productId,
-																Math.max(
-																	(quantities[
-																		items
-																			.productId
-																	] ||
-																		items.quantity) -
-																		1,
-																	1,
-																),
-															)
-														}
+								{response?.cart_products?.length > 0 ? (
+									<Fragment>
+										{Array.isArray(
+											response?.cart_products,
+										) &&
+											response.cart_products.map(
+												(items) => (
+													<tr
+														className='border-b text-center '
+														key={items.productId}
 													>
-														<FaMinus />
-													</button>
-													<span className='w-8 text-center'>
-														{items.quantity}
-													</span>
-													<button
-														className='w-8 h-8 flex items-center justify-center text-gray-700 bg-gray-100 rounded-full cursor-pointer'
-														type='button'
-														onClick={() =>
-															handleUpdateQuantity(
-																items.productId,
-																(quantities[
-																	items
-																		.productId
-																] ||
-																	items.quantity) +
-																	1,
-															)
-														}
-													>
-														<FaPlus />
-													</button>
-												</div>
-											</td>
-											<td className='p-3 w-[20%]'>
-												{(
-													items.price * items.quantity
-												).toLocaleString("vi-VN")}
-											</td>
-											<td className='p-3 w-[5%]'>
-												<button
-													onClick={() =>
-														removeFromCart({
-															userId: user._id,
-															productId:
-																items.productId,
-														})
-													}
-													className='text-red-500 text-2xl cursor-pointer'
-												>
-													<MdCancel />
-												</button>
-											</td>
-										</tr>
-									))}
+														<td className='flex items-center gap-4 p-3 flex-1'>
+															<Image
+																src={
+																	items.image
+																}
+																alt={items.name}
+																className='w-12 h-12 object-cover rounded'
+																width={48}
+																height={48}
+															/>
+															<div className='truncate w-full text-left'>
+																<p className='truncate whitespace-nowrap overflow-hidden text-ellipsis max-w-[200px]'>
+																	{items.name}
+																</p>
+															</div>
+														</td>
+														<td className='p-3 w-[20%]'>
+															{items.price.toLocaleString(
+																"vi-VN",
+															)}
+														</td>
+														<td className='p-3 w-[20%]'>
+															<div className='flex items-center justify-center gap-2'>
+																<button
+																	className='w-8 h-8 flex items-center justify-center text-gray-700 bg-gray-100 rounded-full cursor-pointer'
+																	type='button'
+																	onClick={() =>
+																		handleUpdateQuantity(
+																			items.productId,
+																			Math.max(
+																				(quantities[
+																					items
+																						.productId
+																				] ||
+																					items.quantity) -
+																					1,
+																				1,
+																			),
+																		)
+																	}
+																>
+																	<FaMinus />
+																</button>
+																<span className='w-8 text-center'>
+																	{
+																		items.quantity
+																	}
+																</span>
+																<button
+																	className='w-8 h-8 flex items-center justify-center text-gray-700 bg-gray-100 rounded-full cursor-pointer'
+																	type='button'
+																	onClick={() =>
+																		handleUpdateQuantity(
+																			items.productId,
+																			(quantities[
+																				items
+																					.productId
+																			] ||
+																				items.quantity) +
+																				1,
+																		)
+																	}
+																>
+																	<FaPlus />
+																</button>
+															</div>
+														</td>
+														<td className='p-3 w-[20%]'>
+															{(
+																items.price *
+																items.quantity
+															).toLocaleString(
+																"vi-VN",
+															)}
+														</td>
+														<td className='p-3 w-[5%]'>
+															<button
+																onClick={() =>
+																	removeFromCart(
+																		{
+																			userId: user._id,
+																			productId:
+																				items.productId,
+																		},
+																	)
+																}
+																className='text-red-500 text-2xl cursor-pointer'
+															>
+																<MdCancel />
+															</button>
+														</td>
+													</tr>
+												),
+											)}
+									</Fragment>
+								) : (
+									<div>d</div>
+								)}
 							</tbody>
 						</table>
-
 						<div className='flex justify-between items-center mt-4'>
 							<Link
 								href={"/"}
@@ -176,9 +228,6 @@ const Cart = () => {
 							>
 								Return to shop
 							</Link>
-							<button className='px-4 py-2 bg-gray-900 text-white rounded'>
-								Update Cart
-							</button>
 						</div>
 					</div>
 					<div className='w-full self-start bg-white shadow-md rounded-lg p-4 border border-neutral-200'>
@@ -213,7 +262,7 @@ const Cart = () => {
 									Subtotal:
 								</span>
 								<span className='text-sm font-medium text-[#1a1a1a] '>
-									$84.00
+									{totalPrice.toLocaleString("vi-VN")}
 								</span>
 							</div>
 							<hr />
@@ -231,11 +280,14 @@ const Cart = () => {
 									Total:
 								</span>
 								<span className='text-2xl font-medium text-[#1a1a1a] '>
-									$84.00
+									{totalPrice.toLocaleString("vi-VN")}đ
 								</span>
 							</div>
 						</div>
-						<button className='py-4 px-10 w-full rounded-full bg-[#616ff6] text-base text-white mt-5'>
+						<button
+							className='py-4 px-10 w-full rounded-full bg-[#616ff6] text-base text-white mt-5'
+							onClick={handleCheckout}
+						>
 							Proceed to checkout
 						</button>
 					</div>

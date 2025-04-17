@@ -1,3 +1,4 @@
+import { getRefreshToken } from "@/utils";
 import axios from "./axios";
 export const addCart = async ({
 	userId,
@@ -6,15 +7,7 @@ export const addCart = async ({
 	userId: string;
 	products: object;
 }) => {
-	const tokenString = localStorage.getItem("tokens");
-
-	if (!tokenString) {
-		console.error("No auth or tokens found in localStorage");
-		return;
-	}
-
-	const tokens = JSON.parse(tokenString);
-	const refreshToken = tokens?.refresh_token || "";
+	const refreshToken = getRefreshToken();
 
 	const response = await axios.post(
 		"/cart",
@@ -38,15 +31,7 @@ export const updateCart = async ({
 	userId: string;
 	item_products: object;
 }) => {
-	const tokenString = localStorage.getItem("tokens");
-
-	if (!tokenString) {
-		console.error("No auth or tokens found in localStorage");
-		return;
-	}
-
-	const tokens = JSON.parse(tokenString);
-	const refreshToken = tokens?.refresh_token || "";
+	const refreshToken = getRefreshToken();
 
 	const response = await axios.post(
 		"/cart/update",
@@ -64,15 +49,7 @@ export const updateCart = async ({
 };
 
 export const getListCart = async () => {
-	const tokenString = localStorage.getItem("tokens");
-
-	if (!tokenString) {
-		console.error("No auth or tokens found in localStorage");
-		return;
-	}
-
-	const tokens = JSON.parse(tokenString);
-	const refreshToken = tokens?.refresh_token || "";
+	const refreshToken = getRefreshToken();
 
 	const response = await axios.get("/cart", {
 		headers: {
@@ -89,15 +66,7 @@ export const deleteCart = async ({
 	userId: string;
 	productId: string;
 }) => {
-	const tokenString = localStorage.getItem("tokens");
-
-	if (!tokenString) {
-		console.error("No auth or tokens found in localStorage");
-		return;
-	}
-
-	const tokens = JSON.parse(tokenString);
-	const refreshToken = tokens?.refresh_token || "";
+	const refreshToken = getRefreshToken();
 
 	const response = await axios.delete("/cart", {
 		data: { userId, productId },

@@ -1,22 +1,26 @@
+"use client";
+
 import { findAllProduct } from "@/api/product.api";
 import { ProductTypes } from "@/types";
+import { IProduct } from "@/types/product";
 import { useQuery } from "@tanstack/react-query";
 import { CardItems } from "../card";
+import { CardSkeleton } from "../skeleton";
 
-const RelatedProduct = ({
+const PopularProduct = ({
 	brand,
 	category,
-	currentId,
+	name,
 }: {
-	category?: string;
+	category: string;
 	brand?: string;
-	currentId?: string;
+	name: string;
 }) => {
-	const { data } = useQuery({
+	const { data, isPending } = useQuery({
 		queryKey: ["product", category, brand],
 		queryFn: () =>
 			findAllProduct({
-				limit: 5,
+				limit: 10,
 				query: {
 					category,
 					brand,
@@ -25,19 +29,30 @@ const RelatedProduct = ({
 	});
 
 	const itemsProduct: ProductTypes = data;
-	let items = itemsProduct?.data?.data;
-
-	if (currentId) {
-		items = items?.filter((item) => item._id !== currentId);
+	const items = itemsProduct?.data?.data;
+	if (isPending) {
+		return (
+			<div className='flex flex-col gap-6'>
+				<div className='flex items-center justify-between'>
+					<h2 className='font-medium text-2xl text-[#1A1A1A]'>
+						{name}
+					</h2>
+				</div>
+				<div className='grid grid-cols-5'>
+					{Array.from({ length: 10 }).map((_, index) => (
+						<CardSkeleton key={index} />
+					))}
+				</div>
+			</div>
+		);
 	}
-
 	return (
 		<div className='flex flex-col gap-6'>
-			<h1 className='text-3xl text-[#1a1a1a] text-center font-semibold'>
-				Related Products
-			</h1>
+			<div className='flex items-center justify-between'>
+				<h2 className='font-medium text-2xl text-[#1A1A1A]'>{name}</h2>
+			</div>
 			<div className='grid grid-cols-5'>
-				{items?.map((item, index) => (
+				{items?.map((item: IProduct) => (
 					<CardItems
 						category={item.product_category?.category_name}
 						_id={item._id}
@@ -55,4 +70,4 @@ const RelatedProduct = ({
 	);
 };
 
-export default RelatedProduct;
+export default PopularProduct;

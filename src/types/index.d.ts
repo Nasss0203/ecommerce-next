@@ -1,3 +1,5 @@
+import { IProduct } from "./product";
+
 export interface IProductQuery {
 	category?: string;
 	brand?: string;

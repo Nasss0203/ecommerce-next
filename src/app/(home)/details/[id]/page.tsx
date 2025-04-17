@@ -1,10 +1,13 @@
 "use client";
 import { getDetailProduct } from "@/api/product.api";
-import { RelatedProduct, TabProduct } from "@/components/product";
+import { DialogAuth } from "@/components/dialog";
+import { RelatedProduct } from "@/components/product";
+import { ProductDetailsSkeleton } from "@/components/skeleton";
 import { SlideDetail } from "@/components/slide";
+import { TabProduct } from "@/components/tab";
 import { Rating } from "@/components/vote";
-import { breakpoints } from "@/constants";
 import { useHandleAddToCart } from "@/hooks/useHandleAddCart";
+import { useUser } from "@/hooks/useUser";
 import { IData } from "@/types";
 import { IProduct } from "@/types/product";
 import { useQuery } from "@tanstack/react-query";
@@ -18,22 +21,21 @@ import { LuDot } from "react-icons/lu";
 
 const Details = () => {
 	const [count, setCount] = useState<number>(1);
+	const { user } = useUser();
 	const { handleAddToCart } = useHandleAddToCart();
 	const { id } = useParams();
 
-	const { data, isPending, error } = useQuery({
+	const { data, isPending } = useQuery({
 		queryKey: ["product", id],
 		queryFn: () =>
 			id ? getDetailProduct(id as string) : Promise.resolve(null),
 		enabled: !!id,
 	});
 
-	if (isPending) return <div>Loading...</div>;
-	if (error) return <div>Error loading product</div>;
+	if (isPending) return <ProductDetailsSkeleton></ProductDetailsSkeleton>;
 
 	const itemsProduct: IData<IProduct> | null = data;
 	const items = itemsProduct?.data;
-	console.log(" items~", items);
 
 	const addCart = () => {
 		handleAddToCart({
@@ -46,7 +48,7 @@ const Details = () => {
 	};
 
 	return (
-		<div className={`${breakpoints} flex flex-col gap-10`}>
+		<div className={`flex flex-col gap-10`}>
 			<div className='grid-cols-12 gap-5 grid'>
 				<div className='col-span-7'>
 					<div className='flex items-center gap-2'>
@@ -69,11 +71,8 @@ const Details = () => {
 					</div>
 				</div>
 				<div className='col-span-5'>
-					<div className='flex gap-1 text-xl items-center'>
+					<div className='flex gap-1 text-xl items-center line-clamp-2'>
 						{items?.product_name}
-						<span className='px-2 py-1 inline-flex rounded-sm bg-green-300 text-green-700 text-xs font-normal'>
-							In Stock
-						</span>
 					</div>
 					<div className='flex flex-col gap-5'>
 						<div className='flex items-center gap-1'>
@@ -87,6 +86,10 @@ const Details = () => {
 								</span>
 								<span className='text-[#666]'>2,51,594</span>
 							</div>
+							<LuDot />
+							<span className='px-2 py-1 inline-flex rounded-sm bg-green-300 text-green-700 text-xs font-normal'>
+								In Stock
+							</span>
 						</div>
 						<div className='items-center flex gap-3 pb-5 border-b border-[#E5E5E5]'>
 							<div className='flex items-center gap-1'>
@@ -109,7 +112,7 @@ const Details = () => {
 							<div className='flex flex-col gap-1'>
 								<div className=' flex items-center gap-1'>
 									<span className='text-[#1A1A1A] text-sm'>
-										Brand:
+										Thương hiệu:
 									</span>
 									<span className='text-[#808080] text-sm'>
 										{items?.product_brand?.brand_name && (
@@ -126,7 +129,7 @@ const Details = () => {
 								</div>
 								<div className=' flex items-center gap-1'>
 									<span className='text-[#1a1a1a] text-sm'>
-										Category:
+										Danh mục:
 									</span>
 									<span className='text-[#808080] text-sm'>
 										{items?.product_category
@@ -175,16 +178,32 @@ const Details = () => {
 									<FaPlus />
 								</button>
 							</div>
-							<button
-								className='bg-[#616ff6] flex-1 text-white font-medium rounded-full px-10 py-4 flex justify-center items-center gap-2  transition-colors'
-								type='button'
-								onClick={addCart}
-							>
-								Add to Cart
-								<span className='text-xl'>
-									<BsBag />
-								</span>
-							</button>
+
+							{user ? (
+								<button
+									className='bg-[#616ff6] flex-1 text-white font-medium rounded-full px-10 py-4 flex justify-center items-center gap-2  transition-colors'
+									type='button'
+									onClick={addCart}
+								>
+									Thêm vào giỏ hàng
+									<span className='text-xl'>
+										<BsBag />
+									</span>
+								</button>
+							) : (
+								<DialogAuth>
+									<button
+										className='bg-[#616ff6] flex-1 text-white font-medium rounded-full px-10 py-4 flex justify-center items-center gap-2  transition-colors'
+										type='button'
+									>
+										Thêm vào giỏ hàng
+										<span className='text-xl'>
+											<BsBag />
+										</span>
+									</button>
+								</DialogAuth>
+							)}
+
 							<div className='w-12 h-12 text-2xl  rounded-full bg-blue-100  flex items-center justify-center text-[#616ff6]'>
 								<IoMdHeartEmpty />
 							</div>
@@ -192,9 +211,15 @@ const Details = () => {
 					</div>
 				</div>
 			</div>
-			<TabProduct description={items?.product_description} />
-
-			<RelatedProduct></RelatedProduct>
+			<TabProduct
+				description={items?.product_description}
+				title={items?.product_name}
+			/>
+			<RelatedProduct
+				category={items?.product_category?._id}
+				brand={items?.product_brand?._id}
+				currentId={items?._id}
+			></RelatedProduct>
 		</div>
 	);
 };

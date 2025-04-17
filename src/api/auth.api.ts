@@ -1,3 +1,4 @@
+import { getRefreshToken } from "@/utils";
 import { LoginSchemaType, RegisterSchemaType } from "@/validator/auth.schema";
 import axios from "./axios";
 
@@ -21,7 +22,7 @@ export const login = async ({ email, password }: LoginSchemaType) => {
 		email,
 		password,
 	});
-	console.log(" response~", response);
+
 	const metadata = response.data;
 
 	if (metadata) {
@@ -34,16 +35,7 @@ export const login = async ({ email, password }: LoginSchemaType) => {
 
 export const logout = async () => {
 	try {
-		const tokenString = localStorage.getItem("tokens");
-
-		if (!tokenString) {
-			console.error("No auth or tokens found in localStorage");
-			return;
-		}
-
-		const tokens = JSON.parse(tokenString);
-		const refreshToken = tokens?.refresh_token || "";
-
+		const refreshToken = getRefreshToken();
 		const response = await axios.post(
 			"/auth/logout",
 			{},
@@ -53,13 +45,11 @@ export const logout = async () => {
 				},
 			},
 		);
-		console.log(" response~", response);
 
 		if (response) {
 			localStorage.removeItem("auth");
 			localStorage.removeItem("tokens");
 		}
-		console.log(" response~", response);
 
 		return response;
 	} catch (error) {

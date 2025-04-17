@@ -1,4 +1,5 @@
 import { useHandleAddToCart } from "@/hooks/useHandleAddCart";
+import { useUser } from "@/hooks/useUser";
 import { ICardItems } from "@/types";
 import Image from "next/image";
 import { useState } from "react";
@@ -16,11 +17,14 @@ import {
 	DialogTrigger,
 } from "../ui/dialog";
 import { Rating } from "../vote";
+import DialogAuth from "./DialogAuth";
 
 const DialogProduct = (props: ICardItems) => {
-	const { image, title, price, price_discount, rate, brand, _id } = props;
+	const { image, title, price, price_discount, rate, brand, _id, category } =
+		props;
 	const [count, setCount] = useState<number>(0);
 	const { handleAddToCart } = useHandleAddToCart();
+	const { user } = useUser();
 
 	const addCart = () => {
 		handleAddToCart({
@@ -45,15 +49,12 @@ const DialogProduct = (props: ICardItems) => {
 						alt={title as string}
 						width={600}
 						height={600}
-						className='object-cover w-full h-full'
+						className='object-contain w-full h-full'
 					></Image>
 				</div>
 				<DialogHeader>
 					<DialogTitle className='flex gap-1 text-xl items-center'>
 						{title}
-						<span className='px-2 py-1 inline-flex rounded-sm bg-green-300 text-green-700 text-xs font-normal'>
-							In Stock
-						</span>
 					</DialogTitle>
 					<div className='flex flex-col gap-5 w-[500px]'>
 						<div className='flex items-center gap-1'>
@@ -72,6 +73,10 @@ const DialogProduct = (props: ICardItems) => {
 								</span>
 								<span className='text-[#666]'>2,51,594</span>
 							</div>
+							<LuDot />
+							<span className='px-2 py-1 inline-flex rounded-sm bg-green-300 text-green-700 text-xs font-normal'>
+								In Stock
+							</span>
 						</div>
 						<div className='items-center flex gap-3 pb-5 border-b border-[#E5E5E5]'>
 							<div className='flex items-center gap-1'>
@@ -88,9 +93,11 @@ const DialogProduct = (props: ICardItems) => {
 						</div>
 						<div className='space-y-3 pb-5 border-b border-[#E5E5E5]'>
 							<div className=''>
-								<div className='flex items-center'>
+								<div className='flex items-center gap-1'>
 									<span className='text-[#1A1A1A] text-sm'>
-										Brand:{" "}
+										Brand:
+									</span>
+									<span className='text-[#808080] text-sm'>
 										{brand && (
 											<>
 												{brand.charAt(0).toUpperCase()}
@@ -98,7 +105,21 @@ const DialogProduct = (props: ICardItems) => {
 											</>
 										)}
 									</span>
-									<span></span>
+								</div>
+								<div className=' flex items-center gap-1'>
+									<span className='text-[#1a1a1a] text-sm'>
+										Category:
+									</span>
+									<span className='text-[#808080] text-sm'>
+										{category && (
+											<>
+												{category
+													.charAt(0)
+													.toUpperCase()}
+												{category.slice(1)}
+											</>
+										)}
+									</span>
 								</div>
 							</div>
 							<DialogDescription className='line-clamp-3 text-[#808080] text-sm'>
@@ -129,29 +150,35 @@ const DialogProduct = (props: ICardItems) => {
 									<FaPlus />
 								</button>
 							</div>
-							<button
-								className='bg-[#616ff6] flex-1 text-white font-medium rounded-full px-10 py-4 flex justify-center items-center gap-2  transition-colors'
-								type='button'
-								onClick={addCart}
-							>
-								Add to Cart
-								<span className='text-xl'>
-									<BsBag />
-								</span>
-							</button>
+							{user ? (
+								<button
+									className='bg-[#616ff6] flex-1 text-white font-medium rounded-full px-10 py-4 flex justify-center items-center gap-2  transition-colors'
+									type='button'
+									onClick={addCart}
+								>
+									Add to Cart
+									<span className='text-xl'>
+										<BsBag />
+									</span>
+								</button>
+							) : (
+								<DialogAuth>
+									<button
+										className='bg-[#616ff6] flex-1 text-white font-medium rounded-full px-10 py-4 flex justify-center items-center gap-2  transition-colors'
+										type='button'
+									>
+										Add to Cart
+										<span className='text-xl'>
+											<BsBag />
+										</span>
+									</button>
+								</DialogAuth>
+							)}
 							<div className='w-12 h-12 text-2xl  rounded-full bg-blue-100  flex items-center justify-center text-[#616ff6]'>
 								<IoMdHeartEmpty />
 							</div>
 						</div>
 						<div className='flex flex-col gap-2'>
-							<div className=' flex items-center gap-1'>
-								<span className='text-[#1a1a1a] text-sm'>
-									Category:
-								</span>
-								<span className='text-[#808080] text-sm'>
-									Vegetables
-								</span>
-							</div>
 							<div className=' flex items-center gap-1'>
 								<span className='text-[#1a1a1a] text-sm'>
 									Tag:
