@@ -38,7 +38,7 @@ const PopularProduct = ({
 						{name}
 					</h2>
 				</div>
-				<div className='grid grid-cols-5'>
+				<div className='grid lg:grid-cols-5 grid-cols-2'>
 					{Array.from({ length: 10 }).map((_, index) => (
 						<CardSkeleton key={index} />
 					))}
@@ -51,7 +51,7 @@ const PopularProduct = ({
 			<div className='flex items-center justify-between'>
 				<h2 className='font-medium text-2xl text-[#1A1A1A]'>{name}</h2>
 			</div>
-			<div className='grid grid-cols-5'>
+			<div className='grid lg:grid-cols-5 grid-cols-2 md:grid-cols-4'>
 				{items?.map((item: IProduct) => (
 					<CardItems
 						category={item.product_category?.category_name}

@@ -2,6 +2,7 @@
 
 import { findOneOrder } from "@/api/order.api";
 import { useQuery } from "@tanstack/react-query";
+import Image from "next/image";
 import { useParams } from "next/navigation";
 
 const DetailsOrder = () => {
@@ -60,7 +61,9 @@ const DetailsOrder = () => {
 						key={idx}
 						className='flex gap-4 items-center border-b py-4'
 					>
-						<img
+						<Image
+							height={96}
+							width={96}
 							src={item.image}
 							alt={item.name}
 							className='w-24 h-24 object-cover rounded-md border'

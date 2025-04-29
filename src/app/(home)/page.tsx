@@ -12,8 +12,9 @@ const categoryList = [
 const Home = () => {
 	return (
 		<div className='flex flex-col gap-8'>
-			{categoryList.map((item, index) => (
+			{categoryList.map((item) => (
 				<PopularProduct
+					key={item.id}
 					category={item.id}
 					name={item.name}
 				></PopularProduct>

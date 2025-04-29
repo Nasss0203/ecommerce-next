@@ -1,6 +1,7 @@
 "use client";
 import { useHandleAddToCart } from "@/hooks/useHandleAddCart";
 import { useUser } from "@/hooks/useUser";
+import { cn } from "@/lib/utils";
 import { ICardItems } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -35,13 +36,20 @@ const CardItems = (props: ICardItems) => {
 	};
 
 	return (
-		<div className='relative group  flex flex-col h-full'>
+		<div className='relative group flex flex-col h-full'>
 			<Link
 				href={`${category}/${brand}/${_id}`}
 				className='p-[5px] border border-[#E5E5E5] flex flex-col transition delay-150 duration-300 ease-in-out hover:shadow-lg'
 			>
 				<div className='w-full h-full bg-white flex items-center justify-center py-2'>
-					<div className='h-[250px] w-[250px] bg-white'>
+					<div
+						className={cn(
+							"lg:h-[250px] lg:w-[250px] ",
+							"md:h-[180px] md:w-[180px]",
+							" h-[140px] w-[140px]",
+							"bg-white",
+						)}
+					>
 						<Image
 							src={image}
 							alt={"title as string"}
@@ -73,7 +81,7 @@ const CardItems = (props: ICardItems) => {
 					</div>
 				</div>
 			</Link>
-			<div className='absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity delay-0 duration-500 ease-in-out'>
+			<div className='absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity delay-0 duration-500 ease-in-out '>
 				<div className='flex flex-col gap-1'>
 					<div className='w-10 h-10 bg-[#fff] border border-[#E5E5E5] text-xl text-neutral-500 rounded-full flex justify-center items-center cursor-pointer'>
 						<IoMdHeartEmpty />
@@ -93,7 +101,7 @@ const CardItems = (props: ICardItems) => {
 			<div className='right-0 bottom-0 p-4 absolute'>
 				{user ? (
 					<div
-						className='flex justify-around items-center w-10 h-10 bg-[#F2F2F2] hover:bg-blue-400 hover:text-white rounded-full cursor-pointer'
+						className='flex justify-around items-center w-10 h-10 bg-[#F2F2F2] lg:hover:bg-blue-400 lg:hover:text-white rounded-full cursor-pointer'
 						onClick={addCart}
 					>
 						<IoBagOutline />

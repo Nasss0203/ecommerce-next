@@ -16,7 +16,9 @@ export const createOrder = async (payload: IOrder) => {
 		console.log(" resposne~", resposne);
 
 		return resposne.data;
-	} catch (error) {}
+	} catch (error) {
+		return error;
+	}
 };
 
 export const findAllOrder = async () => {
@@ -32,7 +34,9 @@ export const findAllOrder = async () => {
 		});
 
 		return resposne.data;
-	} catch (error) {}
+	} catch (error) {
+		return error;
+	}
 };
 
 export const findOneOrder = async (id: string) => {
@@ -48,5 +52,7 @@ export const findOneOrder = async (id: string) => {
 		});
 
 		return resposne.data;
-	} catch (error) {}
+	} catch (error) {
+		return error;
+	}
 };

@@ -67,7 +67,7 @@ export function useAddCart() {
 				],
 			}),
 
-		onSuccess: (data) => {
+		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["cart"] });
 		},
 

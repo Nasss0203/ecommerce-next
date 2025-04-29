@@ -1,23 +1,19 @@
-import { findAllCategory } from "@/api/category.api";
+import { fetchCategories } from "@/api/category.api";
 import type { NextConfig } from "next";
-
-const fetchCategories = async () => {
-	try {
-		const res = await findAllCategory();
-		return res.data || [];
-	} catch (error) {
-		return error;
-	}
-};
 
 const nextConfig: NextConfig = {
 	images: {
 		unoptimized: true,
 	},
 	async rewrites() {
-		const categories = await fetchCategories();
-		const data = categories || [];
-		return data?.flatMap((cate: any) => [
+		const response = await fetchCategories();
+		const data = response || [];
+
+		if (!Array.isArray(data)) {
+			throw new Error("Expected array, got " + typeof data);
+		}
+
+		return data.flatMap((cate: any) => [
 			{
 				source: `/${cate.category_name}`,
 				destination: `/category/${cate._id}`,

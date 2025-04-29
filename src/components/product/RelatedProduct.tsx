@@ -37,7 +37,7 @@ const RelatedProduct = ({
 				Related Products
 			</h1>
 			<div className='grid grid-cols-5'>
-				{items?.map((item, index) => (
+				{items?.map((item) => (
 					<CardItems
 						category={item.product_category?.category_name}
 						_id={item._id}

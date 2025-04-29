@@ -19,7 +19,7 @@ const HeaderCategory = () => {
 		<div className='w-full py-4 bg-[#333]'>
 			<div className={`${breakpoints} flex items-center justify-between`}>
 				<ul className='flex items-center gap-8'>
-					{items?.map((item, index) => {
+					{items?.map((item) => {
 						return (
 							<div key={item._id}>
 								{item.products.length > 0 ? (

@@ -20,7 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 
 interface Address {
@@ -60,7 +60,7 @@ const Checkout = () => {
 
 	const mutation = useMutation({
 		mutationFn: (values: OrderSchemaType) => createOrder(values),
-		onSuccess: (data: any) => {
+		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["cart"] });
 			localStorage.removeItem("checkoutId");
 			router.push("/thanks");
@@ -71,7 +71,7 @@ const Checkout = () => {
 		},
 	});
 
-	const { data, isPending } = useQuery({
+	const { data } = useQuery({
 		queryKey: ["checkout", checkoutId],
 		queryFn: () =>
 			checkoutId ? findOneCheckout(checkoutId) : Promise.resolve(null),
@@ -81,7 +81,7 @@ const Checkout = () => {
 
 	const dataCheckout: ICheckout = data?.data || [];
 
-	const handleAddressChange = (addr: any) => {
+	const handleAddressChange = (addr: SetStateAction<Address | undefined>) => {
 		setShippingAddress(addr);
 	};
 
@@ -147,38 +147,35 @@ const Checkout = () => {
 						</h2>
 						<div className='space-y-5'>
 							<div className='space-y-2'>
-								{dataCheckout.checkout_items?.map(
-									(item: any) => (
-										<div
-											className='flex items-center justify-between'
-											key={item.productId}
-										>
-											<div className='flex items-center gap-1'>
-												<div className='w-[60px] h-[60px]'>
-													<Image
-														src={item.image}
-														alt=''
-														height={60}
-														width={60}
-														className='w-full h-full object-cover shrink'
-													/>
-												</div>
-												<div className='flex flex-col'>
-													<p className='text-[#1a1a1a] text-sm  w-[200px] truncate'>
-														{item.name}
-													</p>
-													<span className='text-[#1a1a1a] text-xs line-clamp-1'>
-														Số lượng:{" "}
-														{item.quantity}
-													</span>
-												</div>
+								{dataCheckout.checkout_items?.map((item) => (
+									<div
+										className='flex items-center justify-between'
+										key={item.productId}
+									>
+										<div className='flex items-center gap-1'>
+											<div className='w-[60px] h-[60px]'>
+												<Image
+													src={item.image}
+													alt=''
+													height={60}
+													width={60}
+													className='w-full h-full object-cover shrink'
+												/>
 											</div>
-											<span className='text-[#1a1a1a] font-medium text-sm'>
-												{item.totalPrice}
-											</span>
+											<div className='flex flex-col'>
+												<p className='text-[#1a1a1a] text-sm  w-[200px] truncate'>
+													{item.name}
+												</p>
+												<span className='text-[#1a1a1a] text-xs line-clamp-1'>
+													Số lượng: {item.quantity}
+												</span>
+											</div>
 										</div>
-									),
-								)}
+										<span className='text-[#1a1a1a] font-medium text-sm'>
+											{item.totalPrice}
+										</span>
+									</div>
+								))}
 							</div>
 							<div className='flex flex-col'>
 								<div className='flex items-center justify-between py-3'>

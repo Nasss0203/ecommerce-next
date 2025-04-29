@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 
 const DashboardOrder = () => {
-	const { data, isPending } = useQuery({
+	const { data } = useQuery({
 		queryKey: ["order"],
 		queryFn: () => findAllOrder(),
 	});
