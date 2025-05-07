@@ -49,8 +49,8 @@ const Details = () => {
 
 	return (
 		<div className={`flex flex-col gap-10`}>
-			<div className='grid-cols-12 gap-5 grid'>
-				<div className='col-span-7'>
+			<div className='lg:grid-cols-12 gap-5 lg:grid flex flex-col '>
+				<div className='lg:col-span-7'>
 					<div className='flex items-center gap-2'>
 						<div className='w-full h-auto'>
 							{items?.product_images &&
@@ -70,7 +70,7 @@ const Details = () => {
 						</div>
 					</div>
 				</div>
-				<div className='col-span-5'>
+				<div className='lg:col-span-5'>
 					<div className='flex gap-1 text-xl items-center line-clamp-2'>
 						{items?.product_name}
 					</div>
@@ -81,34 +81,36 @@ const Details = () => {
 							></Rating>
 							<LuDot />
 							<div className='text-sm flex items-center gap-1'>
-								<span className='text-[#333] font-medium'>
+								<span className='text-[#333] font-medium text-xs lg:text-sm'>
 									SKU:
 								</span>
-								<span className='text-[#666]'>2,51,594</span>
+								<span className='text-[#666] text-xs lg:text-sm'>
+									2,51,594
+								</span>
 							</div>
 							<LuDot />
 							<span className='px-2 py-1 inline-flex rounded-sm bg-green-300 text-green-700 text-xs font-normal'>
 								In Stock
 							</span>
 						</div>
-						<div className='items-center flex gap-3 pb-5 border-b border-[#E5E5E5]'>
+						<div className='items-center flex gap-3 md:pb-5 pb-3 border-b border-[#E5E5E5]'>
 							<div className='flex items-center gap-1'>
-								<span className='text-[#B3B3B3] line-through text-xl font-normal'>
+								<span className='text-[#B3B3B3] line-through lg:text-xl font-normal text-sm'>
 									{(
 										items?.product_price + 5000000
 									).toLocaleString("vi-VN")}
 								</span>
-								<span className='text-[#2C742F] line-clamp-none text-2xl'>
+								<span className='text-[#2C742F] line-clamp-none lg:text-2xl text-base'>
 									{items?.product_price.toLocaleString(
 										"vi-VN",
 									)}
 								</span>
 							</div>
-							<div className='px-2.5 py-2 rounded-full bg-red-100 text-red-500 text-xs'>
+							<div className='px-2.5 py-2 rounded-full bg-red-100 text-red-500 lg:text-xs text-[10px]'>
 								64% Off
 							</div>
 						</div>
-						<div className='space-y-3 pb-5 border-b border-[#E5E5E5]'>
+						<div className='space-y-3 md:pb-5 pb-3 border-b border-[#E5E5E5]'>
 							<div className='flex flex-col gap-1'>
 								<div className=' flex items-center gap-1'>
 									<span className='text-[#1A1A1A] text-sm'>
@@ -154,8 +156,8 @@ const Details = () => {
 								consequat pulvinar.
 							</p>
 						</div>
-						<div className='flex items-center gap-4 pb-5 border-b border-[#E5E5E5]'>
-							<div className='flex items-center border border-gray-300 rounded-full px-2 py-1.5'>
+						<div className='flex items-center gap-4 pb-5 border-b border-[#E5E5E5] '>
+							<div className='flex items-center border justify-between border-gray-300 rounded-full px-2 py-1.5 flex-1 lg:flex-none'>
 								<button
 									className='w-9 h-9 flex items-center justify-center text-gray-700 bg-gray-100 rounded-full cursor-pointer'
 									type='button'
@@ -181,11 +183,13 @@ const Details = () => {
 
 							{user ? (
 								<button
-									className='bg-[#616ff6] flex-1 text-white font-medium rounded-full px-10 py-4 flex justify-center items-center gap-2  transition-colors'
+									className='bg-[#616ff6] lg:flex-1 text-white font-medium rounded-full lg:px-10 lg:py-4 p-4 flex justify-center items-center gap-2  transition-colors'
 									type='button'
 									onClick={addCart}
 								>
-									Thêm vào giỏ hàng
+									<span className='hidden lg:block'>
+										Thêm vào giỏ hàng
+									</span>
 									<span className='text-xl'>
 										<BsBag />
 									</span>
@@ -204,7 +208,7 @@ const Details = () => {
 								</DialogAuth>
 							)}
 
-							<div className='w-12 h-12 text-2xl  rounded-full bg-blue-100  flex items-center justify-center text-[#616ff6]'>
+							<div className='w-12 h-12 text-2xl  rounded-full bg-blue-100  lg:flex items-center justify-center text-[#616ff6] hidden '>
 								<IoMdHeartEmpty />
 							</div>
 						</div>

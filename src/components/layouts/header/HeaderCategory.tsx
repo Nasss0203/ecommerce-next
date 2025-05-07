@@ -13,12 +13,12 @@ const HeaderCategory = () => {
 		queryFn: () => findAllCategory(),
 	});
 	const itemsCategory: IData<ICategory[]> = data;
-	const items = itemsCategory?.data;
-	console.log(" items~", items);
+	const items = itemsCategory?.data || [];
+
 	return (
-		<div className='w-full py-4 bg-[#333]'>
+		<div className='w-full md:py-4 py-2 bg-[#333]'>
 			<div className={`${breakpoints} flex items-center justify-between`}>
-				<ul className='flex items-center gap-8'>
+				<ul className='flex items-center gap-4 md:gap-8 overflow-x-auto'>
 					{items?.map((item) => {
 						return (
 							<div key={item._id}>
@@ -36,7 +36,7 @@ const HeaderCategory = () => {
 						);
 					})}
 				</ul>
-				<div className='flex items-center gap-2 text-white font-medium text-sm'>
+				<div className='lg:flex items-center gap-2 text-white font-medium text-sm hidden'>
 					<span className='text-xl'>
 						<FiPhoneCall />
 					</span>

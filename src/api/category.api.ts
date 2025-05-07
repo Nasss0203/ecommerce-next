@@ -7,7 +7,7 @@ export const findAllCategory = async () => {
 export const fetchCategories = async () => {
 	try {
 		const res = await findAllCategory();
-		return res.data || [];
+		return res?.data || [];
 	} catch (error) {
 		return error;
 	}

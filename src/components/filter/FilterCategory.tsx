@@ -25,12 +25,11 @@ const FilterCategory = ({
 		queryKey: ["brand"],
 		queryFn: () => findAllBrand(id),
 	});
-	console.log(" data~", data);
 
 	const itemsBrand: IData<IBrand[]> = data;
 	const items = itemsBrand?.data;
 	return (
-		<div className='col-span-1 pr-5'>
+		<div className='col-span-1 pr-5 hidden lg:block'>
 			<div className='flex flex-col gap-4'>
 				<div className='inline-flex items-center gap-1 text-white text-sm py-2 px-7 bg-[#616ff6] rounded-full w-fit'>
 					<span>Filter</span>
@@ -56,29 +55,30 @@ const FilterCategory = ({
 								</Label>
 							</div>
 							{items?.map((item) => {
-								return <>
-									{
-
-										item.products.length > 0 ? <div
-											key={item._id}
-											className='flex items-center space-x-2'
-										>
-											<RadioGroupItem
-												value={item._id}
-												id={item._id}
-											/>
-											<Label
-												htmlFor={item._id}
-												className='text-sm'
+								return (
+									<>
+										{item.products.length > 0 ? (
+											<div
+												key={item._id}
+												className='flex items-center space-x-2'
 											>
-												{item.brand_name}
-												<span className='text-[#808080]'>
-													(134)
-												</span>
-											</Label>
-										</div> : null
-									}
-								</>
+												<RadioGroupItem
+													value={item._id}
+													id={item._id}
+												/>
+												<Label
+													htmlFor={item._id}
+													className='text-sm'
+												>
+													{item.brand_name}
+													<span className='text-[#808080]'>
+														(134)
+													</span>
+												</Label>
+											</div>
+										) : null}
+									</>
+								);
 							})}
 						</RadioGroup>
 

@@ -30,6 +30,7 @@ const PopularProduct = ({
 
 	const itemsProduct: ProductTypes = data;
 	const items = itemsProduct?.data?.data;
+
 	if (isPending) {
 		return (
 			<div className='flex flex-col gap-6'>

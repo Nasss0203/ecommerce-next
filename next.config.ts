@@ -7,11 +7,7 @@ const nextConfig: NextConfig = {
 	},
 	async rewrites() {
 		const response = await fetchCategories();
-		const data = response || [];
-
-		if (!Array.isArray(data)) {
-			throw new Error("Expected array, got " + typeof data);
-		}
+		const data = Array.isArray(response) ? response : [];
 
 		return data.flatMap((cate: any) => [
 			{

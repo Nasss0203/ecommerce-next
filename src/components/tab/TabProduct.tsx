@@ -26,19 +26,22 @@ const TabProduct = ({ description, title }: ITabProduct) => {
 			<Tabs defaultValue='descriptions' className='w-full'>
 				<div className='flex justify-center border-b py-2 border-[#E5E5E5]'>
 					<TabsList>
-						<TabsTrigger value='descriptions' className='w-36'>
+						<TabsTrigger value='descriptions' className='lg:w-36'>
 							Mô tả
 						</TabsTrigger>
 						<TabsTrigger value='additional_information'>
 							Thông tin sản phẩm
 						</TabsTrigger>
-						<TabsTrigger value='customer_feedback' className='w-36'>
+						<TabsTrigger
+							value='customer_feedback'
+							className='lg:w-36'
+						>
 							Đánh giá
 						</TabsTrigger>
 					</TabsList>
 				</div>
 				<div className='flex w-full justify-between py-4'>
-					<div className='py-4 w-[50%]'>
+					<div className='py-4 lg:w-[50%]'>
 						<TabsContent value='descriptions'>
 							<div className='flex flex-col gap-5'>
 								<div className='lg:line-clamp-[9] line-clamp-[4]'>
@@ -65,7 +68,7 @@ const TabProduct = ({ description, title }: ITabProduct) => {
 													{"  "}
 												</DialogDescription>
 											</DialogHeader>
-											<ScrollArea className='h-[90vh] px-10'>
+											<ScrollArea className='h-[90vh] lg:px-10 '>
 												<div className='w-full flex justify-center'>
 													<div
 														className='max-w-[1000px]'
@@ -97,7 +100,7 @@ const TabProduct = ({ description, title }: ITabProduct) => {
 							</div>
 						</TabsContent>
 					</div>
-					<div className='flex flex-col gap-5'>
+					<div className='lg:flex flex-col gap-5 hidden'>
 						<div className='w-[536px] h-[300px] relative group'>
 							<Image
 								src={"/Image3.png"}

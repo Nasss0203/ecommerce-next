@@ -3,10 +3,11 @@ import { reviewCheckout } from "@/api/checkout.api";
 import { useAddCart } from "@/hooks/useCart";
 import { useUser } from "@/hooks/useUser";
 import { ICart } from "@/types/cart.type";
+import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import { MdCancel } from "react-icons/md";
 
@@ -89,29 +90,29 @@ const Cart = () => {
 	return (
 		<div>
 			<div className='flex space-x-5'>
-				<div className='w-[65%] flex flex-col space-y-5'>
-					<div className='w-full self-start bg-white shadow-md rounded-lg p-4 border border-neutral-200'>
-						<table className='w-full border-collapse'>
-							<thead>
-								<tr className='border-b'>
-									<th className='text-left p-3 w-[40%]'>
-										Product
-									</th>
-									<th className='text-center p-3 w-[20%]'>
-										Price
-									</th>
-									<th className='text-center p-3 w-[20%]'>
-										Quantity
-									</th>
-									<th className='text-center p-3 w-[20%]'>
-										Subtotal
-									</th>
-									<th className='text-center p-3 w-[5%]'></th>
-								</tr>
-							</thead>
-							<tbody>
-								{response?.cart_products?.length > 0 ? (
-									<Fragment>
+				<div className='w-[65%] space-y-5'>
+					{response?.cart_products?.length > 0 ? (
+						<div className='flex flex-col '>
+							<div className='w-full self-start bg-white shadow-md rounded-lg p-4 border border-neutral-200'>
+								<table className='w-full border-collapse'>
+									<thead>
+										<tr className='border-b'>
+											<th className='text-left p-3 w-[40%]'>
+												Product
+											</th>
+											<th className='text-center p-3 w-[20%]'>
+												Price
+											</th>
+											<th className='text-center p-3 w-[20%]'>
+												Quantity
+											</th>
+											<th className='text-center p-3 w-[20%]'>
+												Subtotal
+											</th>
+											<th className='text-center p-3 w-[5%]'></th>
+										</tr>
+									</thead>
+									<tbody>
 										{Array.isArray(
 											response?.cart_products,
 										) &&
@@ -215,41 +216,57 @@ const Cart = () => {
 													</tr>
 												),
 											)}
-									</Fragment>
-								) : (
-									<div>d</div>
-								)}
-							</tbody>
-						</table>
-						<div className='flex justify-between items-center mt-4'>
-							<Link
-								href={"/"}
-								className='px-4 py-2 border rounded'
-							>
-								Return to shop
-							</Link>
-						</div>
-					</div>
-					<div className='w-full self-start bg-white shadow-md rounded-lg p-4 border border-neutral-200'>
-						<div className='flex items-center gap-2'>
-							<h5 className='text-base font-medium text-[#1a1a1a]'>
-								Coupon Code
-							</h5>
-							<div className='flex items-center flex-1'>
-								<div className='border border-neutral-900 rounded-full flex-1 py-3 px-4'>
-									<input
-										type='text'
-										name=''
-										id=''
-										className='w-full'
-									/>
+									</tbody>
+								</table>
+
+								<div className='flex justify-between items-center mt-4'>
+									<Link
+										href={"/"}
+										className='px-4 py-2 border rounded'
+									>
+										Return to shop
+									</Link>
 								</div>
-								<button className='py-4 px-10 w-52 rounded-full bg-gray-900 text-sm text-white -ml-10'>
-									Apply Coupon
-								</button>
+							</div>
+							<div className='w-full self-start bg-white shadow-md rounded-lg p-4 border border-neutral-200'>
+								<div className='flex items-center gap-2'>
+									<h5 className='text-base font-medium text-[#1a1a1a]'>
+										Coupon Code
+									</h5>
+									<div className='flex items-center flex-1'>
+										<div className='border border-neutral-900 rounded-full flex-1 py-3 px-4'>
+											<input
+												type='text'
+												name=''
+												id=''
+												className='w-full'
+											/>
+										</div>
+										<button className='py-4 px-10 w-52 rounded-full bg-gray-900 text-sm text-white -ml-10'>
+											Apply Coupon
+										</button>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
+					) : (
+						<div className='flex flex-col items-center justify-center min-h-[60vh] text-center p-6'>
+							<ShoppingCart className='w-16 h-16 text-gray-400 mb-4' />
+							<h2 className='text-2xl font-semibold text-gray-700 mb-2'>
+								Giỏ hàng của bạn đang trống
+							</h2>
+							<p className='text-gray-500 mb-6'>
+								Hãy quay lại cửa hàng và chọn một vài sản phẩm
+								nhé!
+							</p>
+							<Link
+								href='/'
+								className='px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow transition'
+							>
+								Quay lại cửa hàng
+							</Link>
+						</div>
+					)}
 				</div>
 				<div className='w-[35%]'>
 					<div className='w-full self-start bg-white shadow-md rounded-lg p-6 border border-neutral-200'>

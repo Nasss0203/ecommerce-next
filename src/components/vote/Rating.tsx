@@ -17,7 +17,9 @@ const Rating = ({ star }: { star: number }) => {
 						/>
 					))}
 			</div>
-			<span className='text-sm text-[#666]'>{star.toFixed(1)}</span>
+			<span className='text-[#666] text-xs lg:text-sm'>
+				{star.toFixed(1)}
+			</span>
 		</div>
 	);
 };

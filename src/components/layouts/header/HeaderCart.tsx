@@ -7,7 +7,6 @@ import { ICart } from "@/types/cart.type";
 import Image from "next/image";
 import Link from "next/link";
 import { BsCart } from "react-icons/bs";
-import { IoMdHeartEmpty } from "react-icons/io";
 import { IoSearchOutline } from "react-icons/io5";
 const HeaderCart = () => {
 	const { dataListCart } = useAddCart();
@@ -17,7 +16,7 @@ const HeaderCart = () => {
 
 	return (
 		<div
-			className={`flex items-center justify-between py-5 ${breakpoints}`}
+			className={`flex items-center justify-between md:py-5 py-2  ${breakpoints}`}
 		>
 			<Link href={"/"} className='flex items-center gap-1'>
 				<Image
@@ -25,32 +24,31 @@ const HeaderCart = () => {
 					alt=''
 					width={30}
 					height={30}
+					className='md:w-[30px] md:h-[30px] w-[25px] h-[25px]'
 				></Image>
-				<h1 className='text-2xl font-medium text-[#002603]'>
+				<h1 className='text-2xl font-medium text-[#002603] hidden md:block'>
 					E-commerce
 				</h1>
 			</Link>
-			<div className='flex items-center '>
-				<div className='flex items-center py-3 gap-2 px-4 border border-[#E5E5E5] border-r-0 rounded-l-md w-[400px]'>
-					<span className='text-xl text-gray-400'>
-						<IoSearchOutline />
-					</span>
-					<input
-						type='text'
-						className='w-full'
-						placeholder='Tìm sản phẩm...'
-					/>
-				</div>
-				<button className='px-6 py-[15px] rounded-r-md bg-[#616ff6] font-semibold text-white text-sm'>
-					Tìm kiếm
-				</button>
-			</div>
-			{user ? (
-				<div className='flex items-center gap-3'>
-					<div className='text-4xl'>
-						<IoMdHeartEmpty />
+			<>
+				<div className='md:flex items-center hidden'>
+					<div className='flex items-center py-3 gap-2 px-4 border border-[#E5E5E5] border-r-0 rounded-l-md w-[400px]'>
+						<span className='text-xl text-gray-400'>
+							<IoSearchOutline />
+						</span>
+						<input
+							type='text'
+							className='w-full'
+							placeholder='Tìm sản phẩm...'
+						/>
 					</div>
-					<div className='border-r border-[#666] h-5'></div>
+					<button className='px-6 py-[15px] rounded-r-md bg-[#616ff6] font-semibold text-white text-sm'>
+						Tìm kiếm
+					</button>
+				</div>
+			</>
+			{user ? (
+				<div className='flex items-center gap-2'>
 					<Link href={"/cart"} className='flex items-center gap-2 '>
 						<div className='text-4xl relative'>
 							<BsCart />
@@ -67,10 +65,6 @@ const HeaderCart = () => {
 			) : (
 				<DialogAuth>
 					<div className='flex items-center gap-3 cursor-pointer'>
-						<div className='text-4xl'>
-							<IoMdHeartEmpty />
-						</div>
-						<div className='border-r border-[#666] h-5'></div>
 						<div className='text-4xl relative'>
 							<BsCart />
 							<div className='absolute flex justify-center  top-0 left-0 -translate-y-1 translate-x-1/3'>

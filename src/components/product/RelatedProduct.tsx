@@ -36,10 +36,11 @@ const RelatedProduct = ({
 			<h1 className='text-3xl text-[#1a1a1a] text-center font-semibold'>
 				Related Products
 			</h1>
-			<div className='grid grid-cols-5'>
+			<div className='grid lg:grid-cols-5 grid-cols-2'>
 				{items?.map((item) => (
 					<CardItems
 						category={item.product_category?.category_name}
+						brand={item?.product_brand?.brand_name}
 						_id={item._id}
 						image={item.product_thumb}
 						price={item.product_price}
@@ -47,7 +48,6 @@ const RelatedProduct = ({
 						title={item.product_name}
 						rate={4.5}
 						key={item._id}
-						brand={item?.product_brand?.brand_name}
 					></CardItems>
 				))}
 			</div>

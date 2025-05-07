@@ -92,7 +92,9 @@ const InputAddress = ({ onChange }: InputAddressProps) => {
 			<div className='flex flex-col gap-2 flex-1'>
 				<label>Quận</label>
 				<select
-					className='border rounded px-2 py-1'
+					className={`border rounded px-2 py-1 ${
+						!selectedProvince ? "opacity-50 cursor-not-allowed" : ""
+					}`}
 					onChange={(e) => {
 						const selected = districts?.find(
 							(d: any) => d.id === e.target.value,
@@ -120,7 +122,9 @@ const InputAddress = ({ onChange }: InputAddressProps) => {
 			<div className='flex flex-col gap-2 flex-1'>
 				<label>Phường</label>
 				<select
-					className='border rounded px-2 py-1'
+					className={`border rounded px-2 py-1 ${
+						!selectedProvince ? "opacity-50 cursor-not-allowed" : ""
+					}`}
 					onChange={(e) => {
 						const selected = wards?.find(
 							(w: any) => w.id === e.target.value,

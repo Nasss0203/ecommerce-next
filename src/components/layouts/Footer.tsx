@@ -10,7 +10,7 @@ import { SiMastercard, SiVisa } from "react-icons/si";
 
 const Footer = () => {
 	return (
-		<footer className='flex flex-col'>
+		<footer className='lg:flex flex-col hidden'>
 			<div className='bg-[#F7F7F7] py-5'>
 				<div
 					className={`${breakpoints} flex items-center justify-between`}

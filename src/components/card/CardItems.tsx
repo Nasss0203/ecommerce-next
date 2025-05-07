@@ -38,7 +38,7 @@ const CardItems = (props: ICardItems) => {
 	return (
 		<div className='relative group flex flex-col h-full'>
 			<Link
-				href={`${category}/${brand}/${_id}`}
+				href={`/${category}/${brand}/${_id}`}
 				className='p-[5px] border border-[#E5E5E5] flex flex-col transition delay-150 duration-300 ease-in-out hover:shadow-lg'
 			>
 				<div className='w-full h-full bg-white flex items-center justify-center py-2'>
@@ -61,7 +61,7 @@ const CardItems = (props: ICardItems) => {
 				</div>
 				<div className='pb-3 px-3 flex justify-between items-center'>
 					<div className='flex flex-col gap-y-1'>
-						<span className='text-[#4D4D4D] text-base font-semibold line-clamp-1'>
+						<span className='text-[#4D4D4D] text-base font-semibold line-clamp-2 lg:line-clamp-1   '>
 							{title}
 						</span>
 						<div className='flex flex-col text-base font-medium'>
