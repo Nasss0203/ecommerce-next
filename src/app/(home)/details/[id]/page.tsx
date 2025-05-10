@@ -148,13 +148,6 @@ const Details = () => {
 									</span>
 								</div>
 							</div>
-							<p className='line-clamp-3 text-[#808080] text-sm'>
-								Class aptent taciti sociosqu ad litora torquent
-								per conubia nostra, per inceptos himenaeos.
-								Nulla nibh diam, blandit vel consequat nec,
-								ultrices et ipsum. Nulla varius magna a
-								consequat pulvinar.
-							</p>
 						</div>
 						<div className='flex items-center gap-4 pb-5 border-b border-[#E5E5E5] '>
 							<div className='flex items-center border justify-between border-gray-300 rounded-full px-2 py-1.5 flex-1 lg:flex-none'>

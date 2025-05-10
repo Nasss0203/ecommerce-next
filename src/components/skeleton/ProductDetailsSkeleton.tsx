@@ -6,7 +6,7 @@ const ProductDetailsSkeleton = () => {
 		<section className='p-6 md:p-10 animate-pulse'>
 			<div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
 				<Card className='p-6 flex items-center justify-center'>
-					<Skeleton className='h-[400px] w-[400px] rounded-xl' />
+					<Skeleton className='lg:h-[400px] lg:w-[400px] h-[200px] w-[200px] rounded-xl' />
 				</Card>
 
 				<div className='flex flex-col gap-4'>

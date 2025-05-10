@@ -10,10 +10,10 @@ import { SiMastercard, SiVisa } from "react-icons/si";
 
 const Footer = () => {
 	return (
-		<footer className='lg:flex flex-col hidden'>
+		<footer className='lg:flex flex-col '>
 			<div className='bg-[#F7F7F7] py-5'>
 				<div
-					className={`${breakpoints} flex items-center justify-between`}
+					className={`${breakpoints} lg:flex items-center justify-between hidden `}
 				>
 					<div className='flex flex-col w-[440px]'>
 						<h2 className='text-2xl font-semibold text-[#1a1a1a]'>
@@ -56,8 +56,8 @@ const Footer = () => {
 			</div>
 			<div className='bg-[#1A1A1A] pt-[60px]'>
 				<div className={`${breakpoints} flex flex-col gap-[60px]`}>
-					<div className='flex items-center gap-[112px]'>
-						<div className='flex flex-col w-[330px] gap-3'>
+					<div className='flex items-center lg:gap-[112px] lg:flex-row flex-col justify-center gap-y-2 lg:gap-y-0'>
+						<div className='flex flex-col lg:w-[330px] gap-3'>
 							<div className='flex items-center gap-2'>
 								<Image
 									src={"/sneat-logo.png"}
@@ -86,7 +86,7 @@ const Footer = () => {
 								</div>
 							</div>
 						</div>
-						<div className='grid grid-cols-4 gap-[120px]'>
+						<div className='lg:grid lg:grid-cols-4 lg:gap-[120px] text-center'>
 							<div className='space-y-4'>
 								<h4 className='text-base text-white font-medium'>
 									My Account
