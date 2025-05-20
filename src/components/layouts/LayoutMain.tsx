@@ -8,7 +8,7 @@ const LayoutMain = ({ children }: { children: ReactNode }) => {
 		<QueryProvider>
 			<div className='flex flex-col'>
 				<Header></Header>
-				<div className={`${breakpoints} py-5`}>{children}</div>
+				<div className={`${breakpoints} lg:py-5 py-2`}>{children}</div>
 				<Footer></Footer>
 			</div>
 		</QueryProvider>

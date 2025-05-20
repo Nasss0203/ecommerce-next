@@ -44,7 +44,7 @@ const CardItems = (props: ICardItems) => {
 				<div className='w-full h-full bg-white flex items-center justify-center py-2'>
 					<div
 						className={cn(
-							"lg:h-[250px] lg:w-[250px] ",
+							"lg:h-auto lg:w-[250px] ",
 							"md:h-[180px] md:w-[180px]",
 							" h-[140px] w-[140px]",
 							"bg-white",
@@ -61,7 +61,7 @@ const CardItems = (props: ICardItems) => {
 				</div>
 				<div className='pb-3 px-3 flex justify-between items-center'>
 					<div className='flex flex-col gap-y-1'>
-						<span className='text-[#4D4D4D] text-base font-semibold line-clamp-2 lg:line-clamp-1   '>
+						<span className='block w-full text-[#4D4D4D] text-base font-semibold line-clamp-2 h-12 overflow-hidden break-all'>
 							{title}
 						</span>
 						<div className='flex flex-col text-base font-medium'>

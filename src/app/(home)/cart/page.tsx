@@ -256,7 +256,7 @@ const Cart = () => {
 								</div>
 							</div>
 
-							<div className='flex flex-col gap-3'>
+							<div className='flex flex-col gap-3 lg:hidden'>
 								<span className='text-2xl font-semibold'>
 									Giỏ hàng
 								</span>
@@ -411,7 +411,7 @@ const Cart = () => {
 
 				{Array.isArray(response?.cart_products) &&
 				response?.cart_products?.length > 0 ? (
-					<div className='fixed bottom-0 right-0 left-0 p-5 bg-white border-t border-neutral-300 shadow-2xl'>
+					<div className='fixed bottom-0 right-0 left-0 p-5 bg-white border-t border-neutral-300 shadow-2xl block lg:hidden'>
 						<div className='flex items-center justify-between '>
 							<div className='flex-col flex text-left'>
 								<span className='text-xs text-red-500 font-bold'>
