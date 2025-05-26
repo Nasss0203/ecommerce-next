@@ -1,6 +1,3 @@
-import Image from "next/image";
-import { FaPlay } from "react-icons/fa6";
-import { MdOutlineDiscount } from "react-icons/md";
 import { Feedback } from "../card";
 import { Button } from "../ui/button";
 import {
@@ -44,7 +41,7 @@ const TabProduct = ({ description, title }: ITabProduct) => {
 					<div className='py-4 lg:w-[50%]'>
 						<TabsContent value='descriptions'>
 							<div className='flex flex-col gap-5'>
-								<div className='lg:line-clamp-[9] line-clamp-[4]'>
+								<div className='lg:line-clamp-[9] line-clamp-[4] h-[400px]'>
 									<div
 										className=''
 										dangerouslySetInnerHTML={{
@@ -99,51 +96,6 @@ const TabProduct = ({ description, title }: ITabProduct) => {
 								<div>Load more</div>
 							</div>
 						</TabsContent>
-					</div>
-					<div className='lg:flex flex-col gap-5 hidden'>
-						<div className='w-[536px] h-[300px] relative group'>
-							<Image
-								src={"/Image3.png"}
-								alt=''
-								width={536}
-								height={300}
-								unoptimized
-								className='w-full h-full object-cover'
-							></Image>
-							<div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity delay-0 duration-500 ease-in-out'>
-								<div className='w-[50px] h-[50px] bg-[#616ff6] rounded-full flex items-center justify-center text-white'>
-									<FaPlay />
-								</div>
-							</div>
-						</div>
-						<div className='border border-neutral-300 rounded-md px-5 py-6 flex items-center justify-between'>
-							<div className='flex items-center gap-2'>
-								<span className='text-2xl text-[#616ff6]'>
-									<MdOutlineDiscount />
-								</span>
-								<div className='flex flex-col'>
-									<span className='text-sm font-medium text-[#1a1a1a]'>
-										64% Discount
-									</span>
-									<p className='text-[13px] text-[#808080] font-normal'>
-										Save your 64% money with us
-									</p>
-								</div>
-							</div>
-							<div className='flex items-center gap-2'>
-								<span className='text-2xl text-[#616ff6]'>
-									<MdOutlineDiscount />
-								</span>
-								<div className='flex flex-col'>
-									<span className='text-sm font-medium text-[#1a1a1a]'>
-										64% Discount
-									</span>
-									<p className='text-[13px] text-[#808080] font-normal'>
-										Save your 64% money with us
-									</p>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</Tabs>

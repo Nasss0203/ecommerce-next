@@ -33,8 +33,8 @@ const RelatedProduct = ({
 
 	return (
 		<div className='flex flex-col gap-6'>
-			<h1 className='text-3xl text-[#1a1a1a] text-center font-semibold'>
-				Related Products
+			<h1 className='text-3xl text-[#1a1a1a]  font-semibold'>
+				Sản phẩm liên quan
 			</h1>
 			<div className='grid lg:grid-cols-5 grid-cols-2'>
 				{items?.map((item) => (

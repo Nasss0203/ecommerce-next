@@ -36,7 +36,7 @@ const CardItems = (props: ICardItems) => {
 	};
 
 	return (
-		<div className='relative group flex flex-col h-full'>
+		<div className='relative group flex flex-col h-full bg-white'>
 			<Link
 				href={`/${category}/${brand}/${_id}`}
 				className='p-[5px] border border-[#E5E5E5] flex flex-col transition delay-150 duration-300 ease-in-out hover:shadow-lg'
@@ -81,7 +81,7 @@ const CardItems = (props: ICardItems) => {
 					</div>
 				</div>
 			</Link>
-			<div className='absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity delay-0 duration-500 ease-in-out '>
+			<div className='absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity delay-0 duration-500 ease-in-out hidden lg:block'>
 				<div className='flex flex-col gap-1'>
 					<div className='w-10 h-10 bg-[#fff] border border-[#E5E5E5] text-xl text-neutral-500 rounded-full flex justify-center items-center cursor-pointer'>
 						<IoMdHeartEmpty />

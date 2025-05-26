@@ -95,7 +95,7 @@ const DialogProduct = (props: ICardItems) => {
 							<div className=''>
 								<div className='flex items-center gap-1'>
 									<span className='text-[#1A1A1A] text-sm'>
-										Brand:
+										Hãng:
 									</span>
 									<span className='text-[#808080] text-sm'>
 										{brand && (
@@ -108,7 +108,7 @@ const DialogProduct = (props: ICardItems) => {
 								</div>
 								<div className=' flex items-center gap-1'>
 									<span className='text-[#1a1a1a] text-sm'>
-										Category:
+										Danh mục:
 									</span>
 									<span className='text-[#808080] text-sm'>
 										{category && (
@@ -122,13 +122,7 @@ const DialogProduct = (props: ICardItems) => {
 									</span>
 								</div>
 							</div>
-							<DialogDescription className='line-clamp-3 text-[#808080] text-sm'>
-								Class aptent taciti sociosqu ad litora torquent
-								per conubia nostra, per inceptos himenaeos.
-								Nulla nibh diam, blandit vel consequat nec,
-								ultrices et ipsum. Nulla varius magna a
-								consequat pulvinar.
-							</DialogDescription>
+							<DialogDescription className='line-clamp-3 text-[#808080] text-sm'></DialogDescription>
 						</div>
 						<div className='flex items-center gap-4 pb-5 border-b border-[#E5E5E5]'>
 							<div className='flex items-center border border-gray-300 rounded-full px-2 py-1.5'>
@@ -156,7 +150,7 @@ const DialogProduct = (props: ICardItems) => {
 									type='button'
 									onClick={addCart}
 								>
-									Add to Cart
+									Thêm vào giỏ hàng
 									<span className='text-xl'>
 										<BsBag />
 									</span>
@@ -167,7 +161,7 @@ const DialogProduct = (props: ICardItems) => {
 										className='bg-[#616ff6] flex-1 text-white font-medium rounded-full px-10 py-4 flex justify-center items-center gap-2  transition-colors'
 										type='button'
 									>
-										Add to Cart
+										Thêm vào giỏ hàng
 										<span className='text-xl'>
 											<BsBag />
 										</span>
@@ -176,16 +170,6 @@ const DialogProduct = (props: ICardItems) => {
 							)}
 							<div className='w-12 h-12 text-2xl  rounded-full bg-blue-100  flex items-center justify-center text-[#616ff6]'>
 								<IoMdHeartEmpty />
-							</div>
-						</div>
-						<div className='flex flex-col gap-2'>
-							<div className=' flex items-center gap-1'>
-								<span className='text-[#1a1a1a] text-sm'>
-									Tag:
-								</span>
-								<div className='text-[#808080] text-sm'>
-									<span>Vegetables, Healthy</span>
-								</div>
 							</div>
 						</div>
 					</div>

@@ -114,7 +114,7 @@ const Details = () => {
 							<div className='flex flex-col gap-1'>
 								<div className=' flex items-center gap-1'>
 									<span className='text-[#1A1A1A] text-sm'>
-										Thương hiệu:
+										Hãng:
 									</span>
 									<span className='text-[#808080] text-sm'>
 										{items?.product_brand?.brand_name && (

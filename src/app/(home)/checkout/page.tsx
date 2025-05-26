@@ -77,7 +77,6 @@ const Checkout = () => {
 			checkoutId ? findOneCheckout(checkoutId) : Promise.resolve(null),
 		enabled: !!checkoutId,
 	});
-	console.log(data);
 
 	const dataCheckout: ICheckout = data?.data || [];
 
@@ -143,7 +142,7 @@ const Checkout = () => {
 				<div className='w-[30%] self-start bg-white shadow-md rounded-lg p-4 border border-neutral-200'>
 					<div className='space-y-2'>
 						<h2 className='text-xl text-[#1a1a1a] font-medium'>
-							Order Summery
+							Đơn hàng
 						</h2>
 						<div className='space-y-5'>
 							<div className='space-y-2'>
@@ -172,7 +171,10 @@ const Checkout = () => {
 											</div>
 										</div>
 										<span className='text-[#1a1a1a] font-medium text-sm'>
-											{item.totalPrice}
+											{item?.totalPrice?.toLocaleString(
+												"vi-VN",
+											)}
+											đ
 										</span>
 									</div>
 								))}
@@ -180,16 +182,19 @@ const Checkout = () => {
 							<div className='flex flex-col'>
 								<div className='flex items-center justify-between py-3'>
 									<span className='text-sm text-[#4D4D4D] '>
-										Subtotal:
+										Tạm tính:
 									</span>
 									<span className='text-sm font-medium text-[#1a1a1a] '>
-										{dataCheckout.checkout_totalPrice}
+										{dataCheckout?.checkout_totalPrice?.toLocaleString(
+											"vi-VN",
+										) || 0}
+										đ
 									</span>
 								</div>
 								<hr />
 								<div className='flex items-center justify-between py-3'>
 									<span className='text-sm text-[#4D4D4D] '>
-										Shipping:
+										Phí giao hàng:
 									</span>
 									<span className='text-sm font-medium text-[#1a1a1a] '>
 										Free
@@ -198,17 +203,20 @@ const Checkout = () => {
 								<hr />
 								<div className='flex items-center justify-between py-3'>
 									<span className='text-base text-[#4D4D4D] '>
-										Total:
+										Tổng cộng:
 									</span>
 									<span className='text-2xl font-medium text-[#1a1a1a] '>
-										{dataCheckout.checkout_grandTotal}đ
+										{dataCheckout?.checkout_grandTotal?.toLocaleString(
+											"vi-VN",
+										) || 0}
+										đ
 									</span>
 								</div>
 								<hr />
 							</div>
 							<div className='space-y-3'>
 								<h2 className='text-xl text-[#1a1a1a] font-medium'>
-									Payment Method
+									Phương thức thanh toán
 								</h2>
 								<RadioGroup
 									defaultValue='option-one'
@@ -248,7 +256,7 @@ const Checkout = () => {
 							className='py-4 px-10 w-full rounded-full bg-[#616ff6] text-base text-white mt-5'
 							type='submit'
 						>
-							Place Order
+							Đặt hàng
 						</button>
 					</div>
 				</div>

@@ -4,7 +4,6 @@ import { IData } from "@/types";
 import { IBrand } from "@/types/category";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { FaFilter } from "react-icons/fa6";
 import { IoMdStar } from "react-icons/io";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
@@ -31,14 +30,10 @@ const FilterCategory = ({
 	return (
 		<div className='col-span-1 pr-5 hidden lg:block'>
 			<div className='flex flex-col gap-4'>
-				<div className='inline-flex items-center gap-1 text-white text-sm py-2 px-7 bg-[#616ff6] rounded-full w-fit'>
-					<span>Filter</span>
-					<FaFilter />
-				</div>
 				<div className='flex flex-col gap-4'>
 					<div className='flex flex-col gap-4'>
 						<h3 className='text-xl font-medium text-[#1a1a1a]'>
-							All Categories
+							Danh mục
 						</h3>
 
 						<RadioGroup
@@ -51,13 +46,13 @@ const FilterCategory = ({
 									htmlFor='clear-filter'
 									className='text-sm'
 								>
-									All
+									Tất cả
 								</Label>
 							</div>
 							{items?.map((item) => {
 								return (
 									<>
-										{item.products.length > 0 ? (
+										{item.products?.length > 0 ? (
 											<div
 												key={item._id}
 												className='flex items-center space-x-2'
@@ -70,9 +65,14 @@ const FilterCategory = ({
 													htmlFor={item._id}
 													className='text-sm'
 												>
-													{item.brand_name}
-													<span className='text-[#808080]'>
-														(134)
+													<span className='uppercase'>
+														{item.brand_name}
+													</span>
+													<span className='text-[#808080] '>
+														(
+														{item.products
+															?.length || 0}
+														)
 													</span>
 												</Label>
 											</div>
@@ -86,7 +86,7 @@ const FilterCategory = ({
 					</div>
 					<div className='flex flex-col gap-4'>
 						<h3 className='text-xl font-medium text-[#1a1a1a]'>
-							Price
+							Giá
 						</h3>
 						<Slider
 							value={range}
@@ -96,7 +96,7 @@ const FilterCategory = ({
 							step={1}
 						/>
 						<div className='flex items-center gap-1'>
-							<span className='text-[#4D4D4D]'>Price:</span>
+							<span className='text-[#4D4D4D]'>Giá:</span>
 							<span className='text-[#1a1a1a]'>
 								{range[0]} - {range[1]}
 							</span>
@@ -115,7 +115,7 @@ export default FilterCategory;
 function Rating() {
 	return (
 		<div className='flex flex-col gap-4'>
-			<h3 className='text-xl font-medium text-[#1a1a1a]'>Rating</h3>
+			<h3 className='text-xl font-medium text-[#1a1a1a]'>Đánh giá</h3>
 			<div className='flex items-center space-x-2'>
 				<Checkbox id='terms' />
 				<label

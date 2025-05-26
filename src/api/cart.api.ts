@@ -74,6 +74,5 @@ export const deleteCart = async ({
 			Authorization: `Bearer ${refreshToken}`,
 		},
 	});
-	console.log(" response~", response);
 	return response.data;
 };

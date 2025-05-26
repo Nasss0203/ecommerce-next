@@ -12,7 +12,6 @@ export const register = async ({
 		username,
 		password,
 	});
-	console.log(" response~", response);
 	const data = response.data;
 	return data;
 };

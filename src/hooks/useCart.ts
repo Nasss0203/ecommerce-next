@@ -92,7 +92,6 @@ export function useAddCart() {
 		}) => await deleteCart({ userId, productId }),
 
 		onSuccess: (data) => {
-			console.log("Cart item deleted:", data);
 			queryClient.invalidateQueries({ queryKey: ["cart"] });
 		},
 

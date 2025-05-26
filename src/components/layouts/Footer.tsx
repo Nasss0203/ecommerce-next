@@ -1,59 +1,11 @@
 import { breakpoints } from "@/constants";
 import Image from "next/image";
-import {
-	FaApplePay,
-	FaFacebook,
-	FaInstagram,
-	FaXTwitter,
-} from "react-icons/fa6";
+import { FaApplePay } from "react-icons/fa6";
 import { SiMastercard, SiVisa } from "react-icons/si";
 
 const Footer = () => {
 	return (
 		<footer className='lg:flex flex-col '>
-			<div className='bg-[#F7F7F7] py-5'>
-				<div
-					className={`${breakpoints} lg:flex items-center justify-between hidden `}
-				>
-					<div className='flex flex-col w-[440px]'>
-						<h2 className='text-2xl font-semibold text-[#1a1a1a]'>
-							Subcribe our Newsletter
-						</h2>
-						<p className='text-sm text-[#999]'>
-							Pellentesque eu nibh eget mauris congue mattis
-							mattis nec tellus. Phasellus imperdiet elit eu
-							magna.
-						</p>
-					</div>
-					<div className='flex items-center gap-5'>
-						<div className='flex items-center relative'>
-							<div className='py-[14px] px-6 border border-[#E6e6e6] border-r-0 rounded-full w-[500px] pr-16'>
-								<input
-									type='text'
-									name=''
-									id=''
-									className='w-full'
-									placeholder='Your email address'
-								/>
-							</div>
-							<button className='py-[16px] px-10 rounded-full bg-[#616ff6] text-white font-semibold absolute right-1'>
-								Subscribe
-							</button>
-						</div>
-						<div className='flex items-center gap-3 text-xl text-[#888]'>
-							<span>
-								<FaFacebook />
-							</span>
-							<span>
-								<FaXTwitter />
-							</span>
-							<span>
-								<FaInstagram />
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
 			<div className='bg-[#1A1A1A] pt-[60px]'>
 				<div className={`${breakpoints} flex flex-col gap-[60px]`}>
 					<div className='flex items-center lg:gap-[112px] lg:flex-row flex-col justify-center gap-y-2 lg:gap-y-0'>

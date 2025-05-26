@@ -5,7 +5,6 @@ import { IData } from "@/types";
 import { ICategory } from "@/types/category";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { FiPhoneCall } from "react-icons/fi";
 
 const HeaderCategory = () => {
 	const { data } = useQuery({
@@ -28,7 +27,18 @@ const HeaderCategory = () => {
 											href={`/${item.category_name}`}
 											className='text-white font-medium text-sm flex items-center gap-1'
 										>
-											{item.category_name}
+											{item.category_name === "phone"
+												? "Điện thoại"
+												: item.category_name ===
+												  "laptop"
+												? "Laptop"
+												: item.category_name ===
+												  "tablet"
+												? "Tablet"
+												: item.category_name ===
+												  "smart-watch"
+												? "Smart Watch"
+												: ""}
 										</Link>
 									</li>
 								) : null}
@@ -36,12 +46,7 @@ const HeaderCategory = () => {
 						);
 					})}
 				</ul>
-				<div className='lg:flex items-center gap-2 text-white font-medium text-sm hidden'>
-					<span className='text-xl'>
-						<FiPhoneCall />
-					</span>
-					<span>(219) 555-0114</span>
-				</div>
+				<div className='lg:flex items-center gap-2 text-white font-medium text-sm hidden'></div>
 			</div>
 		</div>
 	);

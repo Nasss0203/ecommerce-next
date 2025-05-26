@@ -1,15 +1,16 @@
 "use client";
-import HeaderAuth from "./header/HeaderAuth";
 import HeaderCart from "./header/HeaderCart";
 import HeaderCategory from "./header/HeaderCategory";
 
 const Header = () => {
 	return (
-		<header className='flex flex-col'>
-			<HeaderAuth></HeaderAuth>
-			<hr />
-			<HeaderCart></HeaderCart>
-			<HeaderCategory></HeaderCategory>
+		<header className='z-50 fixed w-full'>
+			<div className='flex flex-col bg-white'>
+				{/* <HeaderAuth></HeaderAuth>
+				<hr /> */}
+				<HeaderCart></HeaderCart>
+				<HeaderCategory></HeaderCategory>
+			</div>
 		</header>
 	);
 };

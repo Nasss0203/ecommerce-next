@@ -13,7 +13,6 @@ export const createOrder = async (payload: IOrder) => {
 				Authorization: `Bearer ${refreshToken}`,
 			},
 		});
-		console.log(" resposne~", resposne);
 
 		return resposne.data;
 	} catch (error) {

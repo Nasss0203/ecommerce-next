@@ -29,7 +29,6 @@ export const useHandleAddToCart = () => {
 				quantity: product.quantity ?? 1,
 			},
 		};
-		console.log(" payload~", payload);
 		if (payload && payload.userId && payload.products) {
 			toast.success("Product added successfully");
 		}

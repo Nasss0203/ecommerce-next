@@ -39,7 +39,6 @@ const SignIn = () => {
 	const mutation = useMutation({
 		mutationFn: (values: LoginSchemaType) => login(values),
 		onSuccess: (data: IBackend<IAuth>) => {
-			console.log(" data~", data);
 			toast.success(data.message);
 			setUser(data.data as IAuth);
 			queryClient.invalidateQueries({ queryKey: ["auth"] });

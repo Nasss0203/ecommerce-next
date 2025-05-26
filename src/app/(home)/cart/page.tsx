@@ -98,16 +98,16 @@ const Cart = () => {
 										<thead>
 											<tr className='border-b'>
 												<th className='text-left p-3 w-[40%]'>
-													Product
+													Sản phẩm
 												</th>
 												<th className='text-center p-3 w-[20%]'>
-													Price
+													Giá
 												</th>
 												<th className='text-center p-3 w-[20%]'>
-													Quantity
+													Số lượng
 												</th>
 												<th className='text-center p-3 w-[20%]'>
-													Subtotal
+													Tạm tính
 												</th>
 												<th className='text-center p-3 w-[5%]'></th>
 											</tr>
@@ -230,28 +230,8 @@ const Cart = () => {
 											href={"/"}
 											className='px-4 py-2 border rounded'
 										>
-											Return to shop
+											Thêm sản phẩm
 										</Link>
-									</div>
-								</div>
-								<div className='w-full self-start bg-white shadow-md rounded-lg p-4 border border-neutral-200'>
-									<div className='flex items-center gap-2'>
-										<h5 className='text-base font-medium text-[#1a1a1a]'>
-											Coupon Code
-										</h5>
-										<div className='flex items-center flex-1'>
-											<div className='border border-neutral-900 rounded-full flex-1 py-3 px-4'>
-												<input
-													type='text'
-													name=''
-													id=''
-													className='w-full'
-												/>
-											</div>
-											<button className='py-4 px-10 w-52 rounded-full bg-gray-900 text-sm text-white -ml-10'>
-												Apply Coupon
-											</button>
-										</div>
 									</div>
 								</div>
 							</div>
@@ -262,7 +242,10 @@ const Cart = () => {
 								</span>
 								{Array.isArray(response?.cart_products) &&
 									response.cart_products.map((items) => (
-										<div className='flex gap-2 border rounded-md p-4 mb-1 shadow-sm'>
+										<div
+											className='flex gap-2 border rounded-md p-4 mb-1 shadow-sm'
+											key={items.productId}
+										>
 											<Image
 												src={items.image}
 												alt={items.name}
@@ -370,12 +353,12 @@ const Cart = () => {
 				<div className='lg:w-[35%] w-full hidden lg:block'>
 					<div className='w-full self-start bg-white shadow-md rounded-lg p-6 border border-neutral-200'>
 						<h2 className='text-xl font-medium text-[#1a1a1a] mb-2'>
-							Cart Total
+							Giỏ hàng
 						</h2>
 						<div className='flex flex-col'>
 							<div className='flex items-center justify-between py-3'>
 								<span className='text-sm text-[#4D4D4D] '>
-									Subtotal:
+									Tạm tính:
 								</span>
 								<span className='text-sm font-medium text-[#1a1a1a] '>
 									{totalPrice.toLocaleString("vi-VN")}
@@ -384,7 +367,7 @@ const Cart = () => {
 							<hr />
 							<div className='flex items-center justify-between py-3'>
 								<span className='text-sm text-[#4D4D4D] '>
-									Shipping:
+									Phí giao hàng:
 								</span>
 								<span className='text-sm font-medium text-[#1a1a1a] '>
 									Free
@@ -393,7 +376,7 @@ const Cart = () => {
 							<hr />
 							<div className='flex items-center justify-between py-3'>
 								<span className='text-base text-[#4D4D4D] '>
-									Total:
+									Tổng cộng:
 								</span>
 								<span className='text-2xl font-medium text-[#1a1a1a] '>
 									{totalPrice.toLocaleString("vi-VN")}đ

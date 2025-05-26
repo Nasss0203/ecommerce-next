@@ -23,3 +23,8 @@ export const getDetailProduct = async (id: string) => {
 
 	return response.data;
 };
+
+export const searchProduct = async (key: string) => {
+	const response = await axios.get(`/products/search/${key}`);
+	return response.data;
+};
