@@ -18,7 +18,7 @@ const ThankPage = () => {
 				</p>
 				<div className='flex flex-col gap-3'>
 					<Button
-						onClick={() => router.push("/dashboard/order/details")}
+						onClick={() => router.push("/dashboard/order")}
 						className='w-full'
 					>
 						Xem đơn hàng

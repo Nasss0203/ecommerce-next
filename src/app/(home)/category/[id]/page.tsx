@@ -12,18 +12,21 @@ import { useState } from "react";
 export default function Category() {
 	const { id } = useParams();
 	const [selectedBrand, setSelectedBrand] = useState<string>("");
+	const [limit, setLimit] = useState(20);
+	console.log(" limit~", limit);
 
 	const { isPending, data } = useQuery({
-		queryKey: ["product", id, selectedBrand],
+		queryKey: ["product", id, selectedBrand, limit],
 		queryFn: () =>
 			findAllProduct({
 				filter: {
 					category: id as string,
 					...(selectedBrand ? { brand: selectedBrand } : {}),
 				},
-				limit: 20,
+				limit: limit,
 			}),
 	});
+	console.log(" data~", data?.data?.total);
 	const itemsCategory: ProductTypes = data;
 	const items = itemsCategory?.data?.data;
 
@@ -77,6 +80,16 @@ export default function Category() {
 									></CardItems>
 								))}
 							</>
+						)}
+					</div>
+					<div className='flex items-center justify-center'>
+						{data?.data?.total < limit ? null : (
+							<button
+								className='px-5 py-3 rounded-md bg-blue-500 font-medium text-white '
+								onClick={() => setLimit(limit + 20)}
+							>
+								Load more
+							</button>
 						)}
 					</div>
 				</div>
